@@ -64,19 +64,54 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\APE.h" />
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataBuffer.h" />
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataInput.h" />
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataOutput.h" />
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Process.h" />
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Structs.h" />
+    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\APE.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataBuffer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataInput.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataOutput.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Process.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Structs.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Vehicle.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataBuffer.cpp" />
-    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataInput.cpp" />
-    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataOutput.cpp" />
-    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Process.cpp" />
+    <ClCompile Include="..\..\..\Numot\Homework_3\Homework_3\main.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataBuffer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataInput.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataOutput.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Process.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Vehicle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

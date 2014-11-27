@@ -13,45 +13,54 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="excluded">
+      <UniqueIdentifier>{8364f333-613f-41e7-8e04-33090a82a685}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\APE.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataInput.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataOutput.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Process.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Structs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Vehicle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataInput.h">
+      <Filter>excluded</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataOutput.h">
+      <Filter>excluded</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Process.h">
+      <Filter>excluded</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Structs.h">
+      <Filter>excluded</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\APE.h">
+      <Filter>excluded</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataBuffer.h">
+      <Filter>excluded</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataInput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataOutput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Process.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Vehicle.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataBuffer.cpp">
+      <Filter>excluded</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataInput.cpp">
+      <Filter>excluded</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataOutput.cpp">
+      <Filter>excluded</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Process.cpp">
+      <Filter>excluded</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Numot\Homework_3\Homework_3\main.cpp">
+      <Filter>excluded</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
