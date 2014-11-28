@@ -4,6 +4,13 @@
 #define VEHICLE_H_
 
 
+/*NOTE: Using 2001 Subaru legacy outback wagon, LL bean eddition for testing
+Cd = .32
+A = 23.4 ft^2 = 2.1739 m^2
+mass = 3715 lbs = 1685.1 kg
+*/
+
+
 class Vehicle
 {
 public:
@@ -15,12 +22,19 @@ public:
 	//Vehicle(double _mass, double _Cdrag, double _A, double _gearRatio, double _diffRatio, double _wheelRadius);
 
 	//member functions
-	double accel(double dt);
-	double velocity(double dt);
+	double velocity(double _currVelocity , double dt);
+	
 	~Vehicle();
 
 
 private:
+
+	//Member private functions
+	double accel();
+	double fDrag();
+	double Frr();
+
+	//Member private properties
 	double mass;
 	double Cdrag;
 	double Crr;
@@ -36,7 +50,7 @@ private:
 	*/
 };
 
-const double transEff = 0.7;
+//const double transEff = 0.7;
 
 
 #endif // VEHICLE_H_

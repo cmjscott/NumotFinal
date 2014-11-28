@@ -63,4 +63,9 @@
       <Filter>excluded</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Examples\Geyser126_2\Geyser126_2.cpp">
+      <Filter>excluded</Filter>
+    </None>
+  </ItemGroup>
 </Project>
