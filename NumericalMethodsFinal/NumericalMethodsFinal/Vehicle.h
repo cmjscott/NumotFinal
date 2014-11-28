@@ -17,7 +17,7 @@ public:
 
 	// Constructors
 	Vehicle();
-	Vehicle(double _mass, double _Cdrag);
+	Vehicle(double _mass, double _Cdrag, double _fDrive);
 	//Vehicle(double _mass, double _Cdrag, double _A);
 	//Vehicle(double _mass, double _Cdrag, double _A, double _gearRatio, double _diffRatio, double _wheelRadius);
 
@@ -26,6 +26,8 @@ public:
 	
 	~Vehicle();
 
+	//Member public properties
+	double fDrive;
 
 private:
 

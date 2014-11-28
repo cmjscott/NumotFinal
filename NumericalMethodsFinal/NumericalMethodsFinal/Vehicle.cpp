@@ -1,4 +1,5 @@
 #include "Vehicle.h"
+#include <cmath>
 
 /*NOTE: Using 2001 Subaru legacy outback wagon, LL bean eddition for testing
 Cd = .32
@@ -10,12 +11,12 @@ Vehicle::Vehicle() {}
 
 
 
-Vehicle::Vehicle(double _mass, double _Cdrag)
+Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive)
 {
 	mass = _mass;
 	Cdrag = _Cdrag;
+	fDrive = _fDrive;
 	Crr = 30 * Cdrag;
-
 }
 
 
@@ -30,21 +31,24 @@ double Vehicle::velocity(double _currVelocity, double dt)
 {
 	double acceleration;
 	currVelocity = _currVelocity;
+	acceleration = accel();
 
-
+	return currVelocity + dt * acceleration;
 }
 
-double accel()
+double Vehicle::accel()
 {
-
+	double fSum;
+	fSum = fDrive + fDrag() + Frr();
+	return fSum / mass;
 }
 
-double fDrag()
+double Vehicle::fDrag()
 {
-
+	return -Cdrag * std::pow(currVelocity, 2);
 }
 
-double Frr()
+double Vehicle::Frr()
 {
-
+	return -Crr * currVelocity;
 }

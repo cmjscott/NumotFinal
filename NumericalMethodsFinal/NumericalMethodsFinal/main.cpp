@@ -4,35 +4,58 @@
 #include <vector>
 #include <fstream>
 #include <iterator>
+#include "Vehicle.h"
+#include <string>
 
-void outputData(std::vector<std::vector<double> > v);
+void outputData(std::vector<std::vector<double> > vec, std::string fileName);
+std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double dt);
 
 int main()
 {
-	std::vector<std::vector<double> > data;
-	std::vector<double> time, accel, velocity;
+	std::vector<std::vector<double> > test1Data;
+	std::vector<double> time, vel;
+	double dt(.01);
 
+	/*NOTE: Using 2001 Subaru legacy outback wagon, LL bean eddition for testing
+	Cd = .32
+	A = 23.4 ft^2 = 2.1739 m^2
+	mass = 3715 lbs = 1685.1 kg
+	*/
+	//Vehicle(double _mass, double _Cdrag, double _fDrive);
+	Vehicle Subaru(1685.1, .32, 1000);
 
+	test1Data = simulation1(Subaru, dt);
 
-
-
-
-	// Now we'll try to create a 3 by 5 "matrix".
-	// First, create a vector with 5 elements
-	std::vector<double> v2(5, 99);
-
-	// Now create a vector of 3 elements. 
-	// Each element is a copy of v2
-	std::vector<std::vector<double> > v2d2(3, v2);
-
-	outputData(v2d2);
+	outputData(test1Data);
 
 	return 0;
 }
 
 
+std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt)
+{
+	std::vector<std::vector<double> > data;
+	std::vector<double> time, vel;
 
-void outputData(std::vector<std::vector<double> > v)
+	time.push_back(0);
+	vel.push_back(0);
+
+	do
+	{
+		vel.push_back(testVehicle.velocity(vel.back(), _dt));
+		time.push_back(time.back() + _dt);
+	} while (vel.back() - vel.rbegin()[1] > .0001);
+
+	std::cout << "Your maximum velocity was " << vel.back() << " m/s\n";
+	std::cout << "Time to reach maximum velocity: " << time.back() << "seconds." << std::endl;
+
+	data.push_back(time);
+	data.push_back(vel);
+	return data;
+}
+
+
+void outputData(std::vector<std::vector<double> > vec, std::string fileName)
 {
 
 	// open a file in write mode.
@@ -41,9 +64,9 @@ void outputData(std::vector<std::vector<double> > v)
 	std::cout << "Writing to the file" << std::endl;
 	
 	// write each line to the output file
-	for (int i = 0; i < v.size(); ++i)
+	for (int i = 0; i < vec.size(); ++i)
 	{
-		std::copy(v[i].begin(), v[i].end(), std::ostream_iterator<float>(outfile, ","));
+		std::copy(vec[i].begin(), vec[i].end(), std::ostream_iterator<float>(outfile, ","));
 		outfile << std::endl;
 	}
 	outfile << std::endl;
