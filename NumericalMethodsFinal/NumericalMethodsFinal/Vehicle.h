@@ -22,7 +22,7 @@ public:
 	//Vehicle(double _mass, double _Cdrag, double _A, double _gearRatio, double _diffRatio, double _wheelRadius);
 
 	//member functions
-	double velocity(double _currVelocity , double dt);
+	double velocity(double _currVelocity, double dt, double *rho);
 	
 	~Vehicle();
 
@@ -32,8 +32,8 @@ public:
 private:
 
 	//Member private functions
-	double accel();
-	double fDrag();
+	double accel(double *rho);
+	double fDrag(double *rho);
 	double Frr();
 
 	//Member private properties
@@ -41,9 +41,10 @@ private:
 	double Cdrag;
 	double Crr;
 	double currVelocity;
-	
+	double frontArea;
+
 	/* to be added later
-	double A;
+	
 	double gearRatio;
 	double diffRatio;
 	double wheelRadius;
