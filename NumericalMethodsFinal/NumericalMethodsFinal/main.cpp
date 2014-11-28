@@ -12,7 +12,7 @@ std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double dt);
 
 int main()
 {
-	std::vector<std::vector<double> > test1Data;
+	std::vector<std::vector<double> > test1Data, test2Data;
 	std::vector<double> time, vel;
 	double dt(.01);
 
@@ -26,8 +26,14 @@ int main()
 
 	test1Data = simulation1(Subaru, dt);
 
-	outputData(test1Data, "test1DataColumn");
+	dt = .001;
 
+	test2Data = simulation1(Subaru, dt);
+
+	outputData(test1Data, "test1DataColumn");
+	outputData(test2Data, "test2DataColumn");
+
+	_getch();
 	return 0;
 }
 
@@ -37,9 +43,13 @@ std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt)
 	std::vector<std::vector<double> > data;
 	std::vector<double> time, vel;
 
+	//Sets initial time and velocity.
 	time.push_back(0);
 	vel.push_back(0);
 
+
+	//NOTE: Need to tweak termination conditions. If I reduce dt, it is terminating too quickly.
+	// maybe base termination on acceleration instead of delta velocity?
 	do
 	{
 		vel.push_back(testVehicle.velocity(vel.back(), _dt));
@@ -60,14 +70,17 @@ void outputData(std::vector<std::vector<double> > vec, std::string _fileName)
 	std::ofstream outfile;
 	std::string filePath = "C://Users//Colton Scott//Documents//" + _fileName + ".dat";
 	
-	// open a file in write mode. 
+	// open file in write mode, overwriting if file exists.
+	//Note: this could lead to loss of data and should be dealt with.
 	outfile.open(filePath.c_str(), std::ios::out | std::ios::trunc);
 
+	//just a double check if the file is open or not.
+	//TODO: write in error handling if file doesnt open or isnt open.
 	if (outfile.is_open())
 	{
 		std::cout << "Writing to the file" << std::endl;
 
-		// write each line to the output file
+		// write each line to the output file as column vectors
 		for (int i = 0; i < vec[0].size(); ++i)
 		{
 			for (int j = 0; j < vec.size(); ++j)
@@ -80,6 +93,8 @@ void outputData(std::vector<std::vector<double> > vec, std::string _fileName)
 
 		// close the opened file.
 		outfile.close();
-	}
-	std::cout << "Complete";
+	}//if (outfile.is_open())
+
+	//sucsess message
+	std::cout << "Sucsess writing data to:" << std::endl <<  filePath << std::endl;
 }
