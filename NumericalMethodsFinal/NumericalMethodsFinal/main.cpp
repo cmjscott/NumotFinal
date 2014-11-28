@@ -26,7 +26,7 @@ int main()
 
 	test1Data = simulation1(Subaru, dt);
 
-	outputData(test1Data);
+	outputData(test1Data, "test1Data");
 
 	return 0;
 }
@@ -55,26 +55,28 @@ std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt)
 }
 
 
-void outputData(std::vector<std::vector<double> > vec, std::string fileName)
+void outputData(std::vector<std::vector<double> > vec, std::string _fileName)
 {
-
-	// open a file in write mode.
-	std::ofstream outfile("C://Users//Colton Scott//Documents//output.csv");
-
-	std::cout << "Writing to the file" << std::endl;
+	std::ofstream outfile;
+	std::string filePath = "C://Users//Colton Scott//Documents//" + _fileName + ".dat";
 	
-	// write each line to the output file
-	for (int i = 0; i < vec.size(); ++i)
+	// open a file in write mode. 
+	outfile.open(filePath.c_str(), std::ios::out | std::ios::trunc);
+
+	if (outfile.is_open())
 	{
-		std::copy(vec[i].begin(), vec[i].end(), std::ostream_iterator<float>(outfile, ","));
+		std::cout << "Writing to the file" << std::endl;
+
+		// write each line to the output file
+		for (int i = 0; i < vec.size(); ++i)
+		{
+			std::copy(vec[i].begin(), vec[i].end(), std::ostream_iterator<float>(outfile, ","));
+			outfile << std::endl;
+		}
 		outfile << std::endl;
+
+		// close the opened file.
+		outfile.close();
 	}
-	outfile << std::endl;
-
-	// close the opened file.
-	outfile.close();
-
 	std::cout << "Complete";
-
-	_getch();
 }
