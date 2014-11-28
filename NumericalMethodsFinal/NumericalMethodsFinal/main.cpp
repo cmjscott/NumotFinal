@@ -26,7 +26,7 @@ int main()
 
 	test1Data = simulation1(Subaru, dt);
 
-	outputData(test1Data, "test1Data");
+	outputData(test1Data, "test1DataColumn");
 
 	return 0;
 }
@@ -68,9 +68,12 @@ void outputData(std::vector<std::vector<double> > vec, std::string _fileName)
 		std::cout << "Writing to the file" << std::endl;
 
 		// write each line to the output file
-		for (int i = 0; i < vec.size(); ++i)
+		for (int i = 0; i < vec[0].size(); ++i)
 		{
-			std::copy(vec[i].begin(), vec[i].end(), std::ostream_iterator<float>(outfile, ","));
+			for (int j = 0; j < vec.size(); ++j)
+			{
+				outfile << vec[j][i] << ',';
+			}
 			outfile << std::endl;
 		}
 		outfile << std::endl;
