@@ -67,5 +67,8 @@
     <None Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Examples\Geyser126_2\Geyser126_2.cpp">
       <Filter>excluded</Filter>
     </None>
+    <None Include="..\..\README.md">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
