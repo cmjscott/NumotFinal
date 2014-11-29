@@ -18,23 +18,24 @@ public:
 	// Constructors
 	Vehicle();
 	Vehicle(double _mass, double _Cdrag, double _fDrive);
-	//Vehicle(double _mass, double _Cdrag, double _A);
-	//Vehicle(double _mass, double _Cdrag, double _A, double _gearRatio, double _diffRatio, double _wheelRadius);
+	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea);
+	//Vehicle(double _mass, double _Cdrag, double _frontalArea, double _gearRatio, double _diffRatio, double _wheelRadius);
+
 
 	//member functions
 	double velocity(double _currVelocity, double dt, double *rho);
-	
 	~Vehicle();
-
-	//Member public properties
-	double fDrive;
+	
 
 private:
 
 	//Member private functions
 	double accel(double *rho);
-	double fDrag(double *rho);
-	double Frr();
+	double fDrag(double *rho);    //returns the drag forces ascociated with air resistance
+	double Frr();                 //returns the resistance ascociated with rolling
+	
+
+
 
 	//Member private properties
 	double mass;
@@ -42,8 +43,9 @@ private:
 	double Crr;
 	double currVelocity;
 	double frontArea;
+	double fDrive;
 
-	/* to be added later
+	/* to be added later, only needed for later simulations
 	
 	double gearRatio;
 	double diffRatio;
