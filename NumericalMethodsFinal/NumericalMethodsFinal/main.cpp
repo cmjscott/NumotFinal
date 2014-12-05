@@ -1,16 +1,4 @@
-#include <iostream> //for cin/cout
-#include <cmath>
-#include <conio.h> // for _getch()
-#include <vector>
-#include <fstream>
-#include <iterator>
-#include "Vehicle.h"
-#include <string>
-
-//function prototypes
-void outputData(std::vector<std::vector<double> > vec, std::string fileName);
-std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double dt, double _rho);
-
+#include "main.h"
 
 int main()
 {
@@ -38,8 +26,8 @@ int main()
 
 
 	//Output data for matlab
-	outputData(test1Data, "sim1");
-	outputData(test2Data, "sim2");
+	util::outputData(test1Data, "sim1");
+	util::outputData(test2Data, "sim2");
 
 	std::cout << "Simulations complete, press any key to quit";
 	_getch();
@@ -69,39 +57,4 @@ std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, d
 	data.push_back(time);
 	data.push_back(vel);
 	return data;
-}
-
-
-void outputData(std::vector<std::vector<double> > vec, std::string _fileName)
-{
-	std::ofstream outfile;
-	std::string filePath = "C://Users//Colton Scott//Documents//" + _fileName + ".dat";
-	
-	// open file in write mode, overwriting if file exists.
-	//Note: this could lead to loss of data and should be dealt with.
-	outfile.open(filePath.c_str(), std::ios::out | std::ios::trunc);
-
-	//just a double check if the file is open or not.
-	//TODO: write in error handling if file doesnt open or isnt open.
-	if (outfile.is_open())
-	{
-		std::cout << "Writing to the file" << std::endl;
-
-		// write each line to the output file as column vectors
-		for (int i = 0; i < vec[0].size(); ++i)
-		{
-			for (int j = 0; j < vec.size(); ++j)
-			{
-				outfile << vec[j][i] << ',';
-			}
-			outfile << std::endl;
-		}
-		outfile << std::endl;
-
-		// close the opened file.
-		outfile.close();
-	}//if (outfile.is_open())
-
-	//sucsess message
-	std::cout << "Sucsess writing data to:" << std::endl <<  filePath << std::endl <<std::endl;
 }

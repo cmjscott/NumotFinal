@@ -39,6 +39,12 @@
     <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataBuffer.h">
       <Filter>excluded</Filter>
     </ClInclude>
+    <ClInclude Include="utilityFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Vehicle.cpp">
@@ -61,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Numot\Homework_3\Homework_3\main.cpp">
       <Filter>excluded</Filter>
+    </ClCompile>
+    <ClCompile Include="utilityFunctions.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
