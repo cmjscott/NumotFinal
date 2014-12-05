@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef VEHICLE_H_
-#define VEHICLE_H_
+#include <cmath>
+#include <iostream>
 
 
 /*NOTE: Using 2001 Subaru legacy outback wagon, LL bean eddition for testing
@@ -56,6 +56,3 @@ private:
 };
 
 //const double transEff = 0.7;
-
-
-#endif // VEHICLE_H_

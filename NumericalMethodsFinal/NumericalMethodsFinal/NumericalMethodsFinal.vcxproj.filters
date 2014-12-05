@@ -68,14 +68,14 @@
     <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Process.cpp">
       <Filter>excluded</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Numot\Homework_3\Homework_3\main.cpp">
-      <Filter>excluded</Filter>
-    </ClCompile>
     <ClCompile Include="utilityFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="matlabFunctions.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Numot\Homework_3\Homework_3\mainn.cpp">
+      <Filter>excluded</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

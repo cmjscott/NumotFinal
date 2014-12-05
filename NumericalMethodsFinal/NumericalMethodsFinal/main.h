@@ -11,10 +11,6 @@
 #include "utilityFunctions.h"
 #include "matlabFunctions.h"
 
-#pragma comment ( lib , "libmat.lib")
-#pragma comment ( lib , "libmx.lib")
-#pragma comment ( lib , "libmex.lib")
-#pragma comment ( lib , "libeng.lib")
 
 
 std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double dt, double _rho);

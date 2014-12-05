@@ -31,7 +31,7 @@ int main()
 	util::outputData(test2Data, "sim2");
 	
 
-	funct();
+	//funct();
 
 	std::cout << "Simulations complete, press any key to quit";
 	_getch();

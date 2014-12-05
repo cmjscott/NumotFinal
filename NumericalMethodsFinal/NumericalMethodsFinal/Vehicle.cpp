@@ -1,6 +1,5 @@
 #include "Vehicle.h"
-#include <cmath>
-#include <iostream>
+
 
 /*NOTE: Using 2001 Subaru legacy outback wagon, LL bean eddition for testing
 Cd = .32
