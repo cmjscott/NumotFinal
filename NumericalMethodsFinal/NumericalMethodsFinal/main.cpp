@@ -2,6 +2,7 @@
 
 int main()
 {
+	
 	std::vector<std::vector<double> > test1Data, test2Data;
 	std::vector<double> time, vel;
 	const double staticRho(1);
@@ -28,6 +29,9 @@ int main()
 	//Output data for matlab
 	util::outputData(test1Data, "sim1");
 	util::outputData(test2Data, "sim2");
+	
+
+	funct();
 
 	std::cout << "Simulations complete, press any key to quit";
 	_getch();
