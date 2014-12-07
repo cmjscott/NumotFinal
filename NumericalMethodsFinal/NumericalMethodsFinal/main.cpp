@@ -35,25 +35,15 @@ int main()
 	Engine *m_pEngine; //name the engine variable
 	m_pEngine = engOpen("null");
 
-	const int arraysize(1000); // number of rows, number of columns, size of the array
-	const double degToRad(.0174);
-	
-	std::vector<double> SinArray, degrees;
-
-	for (int i = 0; i < arraysize; ++i)
-	{
-		SinArray.push_back(sin(i*degToRad));
-		degrees.push_back(i);
-	}
 
 
 	// this is how you pass stuff to matlab
 	//Sends a matrix variable of your data to matlab and names it
-	vecToMatlab(m_pEngine, SinArray, "Sine");
-	vecToMatlab(m_pEngine, degrees, "Degrees");
+	vecToMatlab(m_pEngine, test1Data[0], "time1");
+	vecToMatlab(m_pEngine, test1Data[1], "velocity1");
 
-	funct(m_pEngine);
-	
+	engEvalString(m_pEngine, "figure(\'name\',\'Simulation 1\')"); // opens up matlab figure window
+	engEvalString(m_pEngine, "plot(time1,velocity1)");
 
 	std::cout << "Simulations complete, press any key to quit";
 	_getch();

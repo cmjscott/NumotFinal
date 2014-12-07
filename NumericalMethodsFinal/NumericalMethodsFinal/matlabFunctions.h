@@ -11,7 +11,7 @@
 void funct(engine* m_pEngine);
 
 template <typename T, typename A>
-void vecToMatlab(engine* ptrEngine, std::vector<T,A> vec, std::string varName)
+void vecToMatlab(engine* ptrEngine, std::vector<T,A> const& vec, std::string varName)
 {
 	// this is how you pass stuff to matlab
 	//Sends a matrix variable of your data to matlab and names it
