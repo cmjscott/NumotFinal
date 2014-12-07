@@ -3,10 +3,12 @@
 
 namespace util
 {
-	void util::outputData(std::vector<std::vector<double> > vec, std::string _fileName)
+	/*
+	template<typename T, typename A>
+	void util::outputData(std::vector<std::vector<T,A> > vec, std::string _fileName)
 	{
 		std::ofstream outfile;
-		std::string filePath = "C://Users//cms6420//Documents//" + _fileName + ".dat";
+		std::string filePath = "C://Users//Colton Scott//Documents//" + _fileName + ".dat";
 
 		// open file in write mode, overwriting if file exists.
 		//Note: this could lead to loss of data and should be dealt with.
@@ -36,4 +38,5 @@ namespace util
 		//sucsess message
 		std::cout << "Sucsess writing data to:" << std::endl << filePath << std::endl << std::endl;
 	}
+	*/
 }

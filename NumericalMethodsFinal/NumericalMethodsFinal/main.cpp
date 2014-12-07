@@ -27,14 +27,38 @@ int main()
 
 
 	//Output data for matlab
-	util::outputData(test1Data, "sim1");
-	util::outputData(test2Data, "sim2");
+	//util::outputData(test1Data, "sim1");
+	//util::outputData(test2Data, "sim2");
 	
 
-	//funct();
+	//FOR TESTING THE PASSING OF AN ENGINE POINTER TO A FUNCTION
+	Engine *m_pEngine; //name the engine variable
+	m_pEngine = engOpen("null");
+
+	const int arraysize(1000); // number of rows, number of columns, size of the array
+	const double degToRad(.0174);
+	
+	std::vector<double> SinArray, degrees;
+
+	for (int i = 0; i < arraysize; ++i)
+	{
+		SinArray.push_back(sin(i*degToRad));
+		degrees.push_back(i);
+	}
+
+
+	// this is how you pass stuff to matlab
+	//Sends a matrix variable of your data to matlab and names it
+	vecToMatlab(m_pEngine, SinArray, "Sine");
+	vecToMatlab(m_pEngine, degrees, "Degrees");
+
+	funct(m_pEngine);
+	
 
 	std::cout << "Simulations complete, press any key to quit";
 	_getch();
+	engClose(m_pEngine);
+
 	return 0;
 }
 
