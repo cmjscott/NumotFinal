@@ -1,13 +1,18 @@
 #include "main.h"
 
+
+const double staticRho(1);
+const double dt(.001); 
+const double msToMph(2.2368);
+
 int main()
 {
 	
 	std::vector<std::vector<double> > test1Data, test2Data, test3Data;
 	std::vector<double> time, vel;
-	const double staticRho(1);
+	
 	double rho(1.2041);
-	const double dt(.001);
+	
 
 
 	/*NOTE: Using 2001 Subaru legacy outback wagon, LL bean eddition for testing
@@ -18,9 +23,9 @@ int main()
 	*/
 
 	//create vehicle objects for the simulation
-	Vehicle SubaruSim1(1685.1, .32, 1500);
-	Vehicle SubaruSim2(1685.1, .32, 1500, 2.1739);
-	Vehicle SubaruSim3(1685.1, .32, 1500, 2.1739, 7700);
+	Vehicle SubaruSim1(1685.1, .32, 1700);
+	Vehicle SubaruSim2(1685.1, .32, 1700, 2.1739);
+	Vehicle SubaruSim3(1685.1, .32, 1700, 2.1739, 7700);
 
 	//Run simulations
 	test1Data = simulation1(SubaruSim1, dt, staticRho);
@@ -46,13 +51,17 @@ int main()
 	vecToMatlab(m_pEngine, test3Data[0], "time3");
 	vecToMatlab(m_pEngine, test3Data[1], "velocity3");
 
-	engEvalString(m_pEngine, "figure(\'name\',\'Simulation 1\')"); // opens up matlab figure window
+	engEvalString(m_pEngine, "figure('name','Simulation 1 and 2')"); // opens up matlab figure window
 	engEvalString(m_pEngine, "hold on");
 	engEvalString(m_pEngine, "plot(time1,velocity1, 'r')");
-
-	//engEvalString(m_pEngine, "figure(\'name\',\'Simulation 2\')"); // opens up matlab figure window
 	engEvalString(m_pEngine, "plot(time2,velocity2, 'b')");
-	engEvalString(m_pEngine, "plot(time3,velocity3, 'k')");
+	engEvalString(m_pEngine, "hold off");
+
+	engEvalString(m_pEngine, "figure('name','Simulation 3')"); // opens up matlab figure window
+	engEvalString(m_pEngine, "hold on");
+	engEvalString(m_pEngine, "plot(time3,velocity3, 'b')");
+	engEvalString(m_pEngine, "hold off");
+	
 
 	std::cout << "Simulations complete, press any key to quit";
 	_getch();
@@ -78,7 +87,7 @@ std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, d
 		time.push_back(time.back() + _dt);
 	} while ((vel.back() - vel.rbegin()[1])/_dt > .0001); // keep calculating velocity until the acceleration is less than .0001 (essentially at max velocity)
 
-	std::cout << "Your maximum velocity was " << vel.back() << " m/s\n";
+	std::cout << "Your maximum velocity was " << vel.back() << " m/s  (" << vel.back() * msToMph << " mph)\n";
 	std::cout << "Time to reach maximum velocity: " << time.back() << "seconds." << std::endl << std::endl;
 
 	data.push_back(time);
@@ -115,7 +124,7 @@ std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt, d
 	if (vel.back() < 0)
 		vel.back() = 0;
 
-	std::cout << "Your maximum velocity was " << maxSpeed << " m/s\n";
+	std::cout << "Your maximum velocity was " << maxSpeed << " m/s  (" << maxSpeed * msToMph << " mph)\n";
 	std::cout << "Time to reach maximum velocity: " << time.back() << "seconds." << std::endl;
 	std::cout << "Time to come to a complete stop: " << time.back() - timeMaxSpeed << "seconds." << std::endl << std::endl;
 
