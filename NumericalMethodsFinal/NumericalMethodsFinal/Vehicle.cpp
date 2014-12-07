@@ -128,5 +128,5 @@ double Vehicle::Torque(double throttle)
 
 double Vehicle::RPM(double throttle)
 {
-	return 0;
+	return 1000 + (throttle * 5000);
 }
