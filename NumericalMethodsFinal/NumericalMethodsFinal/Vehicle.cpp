@@ -29,6 +29,17 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalAre
 	
 }
 
+Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea, double _fBrake)
+{
+	mass = _mass;
+	Cdrag = _Cdrag;
+	fDrive = _fDrive;
+	frontArea = _frontalArea;
+	fBrake = _fBrake;
+	Crr = 30 * Cdrag;
+
+}
+
 //Honestly not 100% sure what this does.
 Vehicle::~Vehicle()
 {
@@ -46,11 +57,28 @@ double Vehicle::velocity(double _currVelocity, double dt, double *rho)
 	return currVelocity + dt * acceleration;
 }
 
+double Vehicle::brake(double _currVelocity, double dt, double *rho)
+{
+
+	double acceleration;
+	currVelocity = _currVelocity;
+	acceleration = deccel(rho);
+
+	return currVelocity + dt * acceleration;
+}
+
 //calculates the acceleartion based on the sum of the forces on the car and the mass
 double Vehicle::accel(double *rho)
 {
 	double fSum;
 	fSum = fDrive + fDrag(rho) + Frr();
+	return fSum / mass;
+}
+
+double Vehicle::deccel(double *rho)
+{
+	double fSum;
+	fSum = -fBrake + fDrag(rho) + Frr();
 	return fSum / mass;
 }
 

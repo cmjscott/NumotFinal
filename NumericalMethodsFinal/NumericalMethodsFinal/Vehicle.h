@@ -19,11 +19,13 @@ public:
 	Vehicle();
 	Vehicle(double _mass, double _Cdrag, double _fDrive);
 	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea);
+	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea, double _fBrake);
 	//Vehicle(double _mass, double _Cdrag, double _frontalArea, double _gearRatio, double _diffRatio, double _wheelRadius);
 
 
 	//member functions
 	double velocity(double _currVelocity, double dt, double *rho);
+	double brake(double _currVelocity, double dt, double *rho);
 	~Vehicle();
 	
 
@@ -31,6 +33,7 @@ private:
 
 	//Member private functions
 	double accel(double *rho);
+	double deccel(double *rho);
 	double fDrag(double *rho);    //returns the drag forces ascociated with air resistance
 	double Frr();                 //returns the resistance ascociated with rolling
 	
@@ -44,6 +47,7 @@ private:
 	double currVelocity;
 	double frontArea;
 	double fDrive;
+	double fBrake;
 
 	/* to be added later, only needed for later simulations
 	
