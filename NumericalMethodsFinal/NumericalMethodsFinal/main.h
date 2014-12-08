@@ -4,6 +4,7 @@
 #include <cmath> // for math stuff
 #include <conio.h> // for _getch()
 #include <vector> 
+#include <map>
 #include <fstream> 
 #include <iterator>
 #include "Vehicle.h"

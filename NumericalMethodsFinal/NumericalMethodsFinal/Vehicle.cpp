@@ -12,13 +12,16 @@ Gear Ratios:
 4th 0.697 
 Rev 2.272
 Diff 4.11
+
+Tires: 225/60R16 98H SL
+wheelRadius = 0.33782 m
 */
 
 double Vehicle::transEff = .7;
 
 Vehicle::Vehicle() {}
 
-
+//constructor for sim 1
 Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive)
 {
 	mass = _mass;
@@ -26,9 +29,10 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive)
 	fDrive = _fDrive;
 	Crr = 30 * Cdrag;
 	frontArea = 2; // Used for simulation 1 where the .5 coefficient must be neutralized.
-	torqueDrive = false;
+	//torqueDrive = false;
 }
 
+//constructor for sim 2
 Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea)
 {
 	mass = _mass;
@@ -36,10 +40,10 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalAre
 	fDrive = _fDrive;
 	frontArea = _frontalArea;
 	Crr = 30 * Cdrag;
-	torqueDrive = false;
-	
+	//torqueDrive = false;
 }
 
+//constructor for sim 3
 Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea, double _fBrake)
 {
 	mass = _mass;
@@ -48,20 +52,20 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalAre
 	frontArea = _frontalArea;
 	fBrake = _fBrake;
 	Crr = 30 * Cdrag;
-	torqueDrive = false;
-
+	//torqueDrive = false;
 }
 
-Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, double _gearRatio, double _diffRatio, double _wheelRadius)
+//constructor for sim 4
+Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<double> _gearRatios, double _diffRatio, double _wheelRadius)
 {
 	mass = _mass;
 	Cdrag = _Cdrag;
 	frontArea = _frontalArea;
 	Crr = 30 * Cdrag;
-	gearRatio = _gearRatio;
 	diffRatio = _diffRatio;
-	wheelRadius = _wheelRadius;
-	torqueDrive = true;
+	wheelRadius = _wheelRadius;	
+	gearRatios = _gearRatios;
+	//torqueDrive = true;
 }
 
 

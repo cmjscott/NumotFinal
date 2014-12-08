@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <vector>
 
 
 /*NOTE: Using 2001 Subaru legacy outback wagon, LL bean eddition for testing
@@ -21,7 +22,7 @@ public:
 	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea);
 	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea, double _fBrake);
 	Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea,
-					 double _gearRatio, double _diffRatio, double wheelRadius);
+					 std::vector<double> _gearRatio, double _diffRatios, double wheelRadius);
 	//Vehicle(double _mass, double _Cdrag, double _frontalArea, double _gearRatio, double _diffRatio, double _wheelRadius);
 
 
@@ -54,7 +55,7 @@ private:
 	double fDrive;
 	double fBrake;
 
-	double gearRatio;
+	std::vector<double> gearRatios;
 	double diffRatio;
 	double wheelRadius;
 	bool torqueDrive;

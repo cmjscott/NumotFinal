@@ -1,5 +1,8 @@
 #include "main.h"
 
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 
 const double staticRho(1);
 const double dt(.001); 
@@ -8,24 +11,36 @@ const double msToMph(2.2368);
 int main()
 {
 	
-	std::vector<std::vector<double> > test1Data, test2Data, test3Data;
-	std::vector<double> time, vel;
-	
+	std::vector<std::vector<double> > test1Data, test2Data, test3Data, test4Data;
+	std::vector<double> time, vel, gearRatios;
 	double rho(1.2041);
-	
+	double ratioValues[] = { 2.785, 1.545, 1, .697 };
+	std::map<int, int> torqueCurve;
 
+	gearRatios.assign(ratioValues, ratioValues + sizeof(ratioValues) / sizeof(double));
 
 	/*NOTE: Using 2001 Subaru legacy outback wagon, LL bean eddition for testing
 	Cd = .32
 	A = 23.4 ft^2 = 2.1739 m^2
 	mass = 3715 lbs = 1685.1 kg
 	Drive force ~ 1500 N
+	Gear Ratios:
+	1st 2.785
+	2nd 1.545
+	3rd 1.000
+	4th 0.697
+	Rev 2.272
+	Diff 4.11
+
+	Tires: 225/60R16 98H SL
+	wheelRadius = 0.33782 m
 	*/
 
 	//create vehicle objects for the simulation
 	Vehicle SubaruSim1(1685.1, .32, 1700);
 	Vehicle SubaruSim2(1685.1, .32, 1700, 2.1739);
 	Vehicle SubaruSim3(1685.1, .32, 1700, 2.1739, 7700);
+	Vehicle SubaruSim4(1685.1, .32, 2.1739,gearRatios,4.11,.33782);
 
 	//Run simulations
 	test1Data = simulation1(SubaruSim1, dt, staticRho);
@@ -33,14 +48,15 @@ int main()
 	test3Data = simulation3(SubaruSim3, dt, rho);
 
 	//Output data for matlab
-	//util::outputData(test1Data, "sim1");
-	//util::outputData(test2Data, "sim2");
+	util::outputData(test1Data, "sim1");
+	util::outputData(test2Data, "sim2");
+	util::outputData(test3Data, "sim3");
 	
 
 
 
 	//graph data in matlab
-
+	/*
 	Engine *m_pEngine; //name the matlab engine variable
 	m_pEngine = engOpen("null"); //open an instance of the matlab engine
 
@@ -66,10 +82,10 @@ int main()
 	std::cout << "Simulations complete, press any key to quit";
 	_getch();
 	engClose(m_pEngine);
-
+	*/
+	_getch();
 	return 0;
 }
-
 
 std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, double _rho)
 {
@@ -131,4 +147,11 @@ std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt, d
 	data.push_back(time);
 	data.push_back(vel);
 	return data;
+}
+
+std::map<int, int> setTorque()
+{
+	std::map<int, int> tm;
+
+	tm[12] = 10;
 }
