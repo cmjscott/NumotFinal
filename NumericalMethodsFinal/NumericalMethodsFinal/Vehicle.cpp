@@ -5,6 +5,13 @@
 Cd = .32
 A = 23.4 ft^2 = 2.1739 m^2
 mass = 3715 lbs = 1685.1 kg
+Gear Ratios: 
+1st 2.785 
+2nd 1.545 
+3rd 1.000 
+4th 0.697 
+Rev 2.272
+Diff 4.11
 */
 
 double Vehicle::transEff = .7;
