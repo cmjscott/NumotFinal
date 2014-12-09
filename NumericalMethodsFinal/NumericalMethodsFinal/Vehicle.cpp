@@ -30,7 +30,6 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive)
 	fDrive = _fDrive;
 	Crr = 30 * Cdrag;
 	frontArea = 2; // Used for simulation 1 where the .5 coefficient must be neutralized.
-	//torqueDrive = false;
 }
 
 //constructor for sim 2
@@ -41,7 +40,6 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalAre
 	fDrive = _fDrive;
 	frontArea = _frontalArea;
 	Crr = 30 * Cdrag;
-	//torqueDrive = false;
 }
 
 //constructor for sim 3
@@ -53,7 +51,6 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalAre
 	frontArea = _frontalArea;
 	fBrake = _fBrake;
 	Crr = 30 * Cdrag;
-	//torqueDrive = false;
 }
 
 //constructor for sim 4
@@ -70,7 +67,6 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<d
 	revMap = _revMap;
 	torqueMap = _torqueMap;
 	currGear = 1;
-	//torqueDrive = true;
 }
 
 
@@ -94,7 +90,6 @@ double Vehicle::velocity(double _currVelocity, double dt, double *rho, double th
 
 double Vehicle::brake(double _currVelocity, double dt, double *rho)
 {
-
 	double acceleration;
 	currVelocity = _currVelocity;
 	acceleration = deccel(rho);
@@ -109,7 +104,7 @@ double Vehicle::accel(double *rho, double throttle)
 	if (throttle == -1)
 		fSum = fDrive + fDrag(rho) + Frr();
 	else
-		fSum = engineTorque(throttle) + fDrag(rho) + Frr();
+		fSum = engineDriveForce(throttle) + fDrag(rho) + Frr();
 
 	return fSum / mass;
 }
@@ -135,34 +130,18 @@ double Vehicle::Frr()
 
 // change name and remove fTorque. There is no need for two functions.
 // make throttle a member variable and just set it
-double Vehicle::engineTorque(double throttle)
+double Vehicle::engineDriveForce(double throttle)
 {
-	double currRPM, currTorque;
-	int i = 0;
-
-	currRPM = getRPM();
-
-	do
-	{
-		++i;
-	} while (currRPM < revMap[i]);
-
-	currTorque = torqueMap[i - 1] + (currRPM - revMap[i - 1])*(torqueMap[i] - torqueMap[i - 1]) / (revMap[i] - revMap[i - 1]);
-	
-	return currTorque * throttle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius;;
+	return getTorque(throttle) * throttle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius;;
 }
 
 double Vehicle::getRPM()
 {
 	double rpm;
-	rpm = currVelocity / wheelRadius *(60 / (2 * M_PI)) * gearRatios[currGear-1] * diffRatio;
-	if (rpm < 3000 && currGear == 1	)
-		rpm = 3000;
-	if (rpm > 5200 && currGear <= gearRatios.size())
+	rpm = pubGetRPM();
+	if (rpm > 4000 && currGear <= gearRatios.size())
 		++currGear;
-	if (rpm > 6800)
-		rpm = 6800;
-	
+
 	return rpm;
 }
 
@@ -174,10 +153,11 @@ double Vehicle::pubGetRPM()
 		rpm = 3000;
 	if (rpm > 6800)
 		rpm = 6800;
+
 	return rpm;
 }
 
-double Vehicle::pubGetTorque(double throttle)
+double Vehicle::getTorque(double throttle)
 {
 	double currRPM, currTorque;
 	int i = 0;
@@ -191,5 +171,5 @@ double Vehicle::pubGetTorque(double throttle)
 
 	currTorque = torqueMap[i - 1] + (currRPM - revMap[i - 1])*(torqueMap[i] - torqueMap[i - 1]) / (revMap[i] - revMap[i - 1]);
 
-	return currTorque * throttle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius;;
+	return currTorque;
 }

@@ -30,7 +30,8 @@ public:
 	//member functions
 	double velocity(double _currVelocity, double dt, double *rho, double throttle = -1);
 	double brake(double _currVelocity, double dt, double *rho);
-	double pubGetTorque(double throttle);
+	double engineDriveForce(double throttle);
+	double getTorque(double throttle);
 	double pubGetRPM();
 	~Vehicle();
 	
@@ -40,7 +41,6 @@ private:
 	//Member private functions
 	double accel(double *rho, double throttle = -1);
 	double deccel(double *rho);
-	double engineTorque(double throttle);
 	double getRPM();
 	double fDrag(double *rho);    //returns the drag forces ascociated with air resistance
 	double Frr();                 //returns the resistance ascociated with rolling

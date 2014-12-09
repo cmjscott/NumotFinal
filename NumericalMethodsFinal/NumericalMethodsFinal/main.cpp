@@ -44,9 +44,9 @@ int main()
 	Vehicle SubaruSim4(1685.1, .32, 2.1739,gearRatios,4.11,.33782,revMap,torqueMap);
 
 	//Run simulations
-	test1Data = simulation1(SubaruSim1, dt, staticRho);
-	test2Data = simulation1(SubaruSim2, dt, rho);
-	test3Data = simulation3(SubaruSim3, dt, rho);
+	//test1Data = simulation1(SubaruSim1, dt, staticRho);
+	//test2Data = simulation1(SubaruSim2, dt, rho);
+	//test3Data = simulation3(SubaruSim3, dt, rho);
 	test4Data = simulation4(SubaruSim4, dt, rho);
 
 	//Output data for matlab
@@ -163,13 +163,16 @@ std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt, d
 std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, double _rho)
 {
 	std::vector<std::vector<double> > data;
-	std::vector<double> time, vel, rpm, torque;
+	std::vector<double> time, vel, rpm, force, torque;
 	const double timeToFullThrottle(5);
 	double maxSpeed, timeMaxSpeed, throttle(0);
 
-	//Sets initial time and velocity.
+	//Sets initial values
 	time.push_back(0);
 	vel.push_back(0);
+	rpm.push_back(0);
+	force.push_back(0);
+	torque.push_back(0);
 
 	for (int i = 0; i < timeToFullThrottle / _dt; ++i)
 	{
@@ -177,7 +180,8 @@ std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, d
 		vel.push_back(testVehicle.velocity(vel.back(), _dt, &_rho, throttle));
 		time.push_back(time.back() + _dt);
 		rpm.push_back(testVehicle.pubGetRPM());
-		torque.push_back(testVehicle.pubGetTorque(throttle));
+		force.push_back(testVehicle.engineDriveForce(throttle));
+		torque.push_back(testVehicle.getTorque(throttle));
 	}
 
 	do
@@ -185,8 +189,9 @@ std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, d
 		vel.push_back(testVehicle.velocity(vel.back(), _dt, &_rho, throttle));
 		time.push_back(time.back() + _dt);
 		rpm.push_back(testVehicle.pubGetRPM());
-		torque.push_back(testVehicle.pubGetTorque(throttle));
-	} while ((vel.back() - vel.rbegin()[1]) / _dt > .01); // keep calculating velocity until the acceleration is less than .01 (essentially at max velocity)
+		force.push_back(testVehicle.engineDriveForce(throttle));
+		torque.push_back(testVehicle.getTorque(throttle));
+	} while ((vel.back() - vel.rbegin()[1]) / _dt > .1); // keep calculating velocity until the acceleration is less than .01 (essentially at max velocity)
 
 	std::cout << "Your maximum velocity was " << vel.back() << " m/s  (" << vel.back() * msToMph << " mph)\n";
 	std::cout << "Time to reach maximum velocity: " << time.back() << "seconds." << std::endl;
@@ -194,6 +199,7 @@ std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, d
 	data.push_back(time);
 	data.push_back(vel);
 	data.push_back(rpm);
+	data.push_back(force);
 	data.push_back(torque);
 	return data;
 }
