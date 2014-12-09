@@ -132,11 +132,6 @@ double Vehicle::Frr()
 	return -Crr * currVelocity;
 }
 
-double Vehicle::fTorque(double throttle)
-{
-	return engineTorque(throttle);
-}
-
 
 // change name and remove fTorque. There is no need for two functions.
 // make throttle a member variable and just set it

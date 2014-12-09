@@ -23,11 +23,9 @@ public:
 	Vehicle(double _mass, double _Cdrag, double _fDrive);
 	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea);
 	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea, double _fBrake);
-	Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea,
-					 std::vector<double> _gearRatio, double _diffRatios, double wheelRadius,
-					 std::vector<double> _revMap, std::vector<double> _torqueMap);
-	//Vehicle(double _mass, double _Cdrag, double _frontalArea, double _gearRatio, double _diffRatio, double _wheelRadius);
-
+	Vehicle(double _mass, double _Cdrag, double _frontalArea,std::vector<double> _gearRatio,
+		double _diffRatios, double wheelRadius,std::vector<double> _revMap, std::vector<double> _torqueMap);
+	
 
 	//member functions
 	double velocity(double _currVelocity, double dt, double *rho, double throttle = -1);
@@ -42,7 +40,6 @@ private:
 	//Member private functions
 	double accel(double *rho, double throttle = -1);
 	double deccel(double *rho);
-	double fTorque(double throttle);
 	double engineTorque(double throttle);
 	double getRPM();
 	double fDrag(double *rho);    //returns the drag forces ascociated with air resistance

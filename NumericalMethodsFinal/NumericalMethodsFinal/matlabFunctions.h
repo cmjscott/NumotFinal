@@ -20,5 +20,4 @@ void vecToMatlab(engine* ptrEngine, std::vector<T,A> const& vec, std::string var
 	std::copy(vec.begin(), vec.end(), mxGetPr(VAR)); //copies data from the passed vector to the mxArray
 	engPutVariable(ptrEngine, varName.c_str(), VAR); //creates a matlab variable using the passed string
 	mxDestroyArray(VAR);
-
 }

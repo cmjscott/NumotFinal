@@ -10,7 +10,6 @@ const double msToMph(2.2368);
 
 int main()
 {
-	
 	std::vector<std::vector<double> > test1Data, test2Data, test3Data, test4Data;
 	std::vector<double> time, vel, gearRatios; 
 	double rho(1.2041);
@@ -57,7 +56,7 @@ int main()
 	util::outputData(test4Data, "sim4");
 
 
-
+	/*
 	//graph data in matlab
 
 	Engine *m_pEngine; //name the matlab engine variable
@@ -65,11 +64,17 @@ int main()
 
 	vecToMatlab(m_pEngine, test1Data[0], "time1");
 	vecToMatlab(m_pEngine, test1Data[1], "velocity1");
+
 	vecToMatlab(m_pEngine, test2Data[0], "time2");
 	vecToMatlab(m_pEngine, test2Data[1], "velocity2");
+
 	vecToMatlab(m_pEngine, test3Data[0], "time3");
 	vecToMatlab(m_pEngine, test3Data[1], "velocity3");
 
+	vecToMatlab(m_pEngine, test4Data[0], "time4");
+	vecToMatlab(m_pEngine, test4Data[1], "velocity4");
+	vecToMatlab(m_pEngine, test4Data[2], "rpm4");
+	vecToMatlab(m_pEngine, test4Data[3], "torque4");
 
 
 	engEvalString(m_pEngine, "figure('name','Simulation 1 and 2')"); // opens up matlab figure window
@@ -82,11 +87,13 @@ int main()
 	engEvalString(m_pEngine, "hold on");
 	engEvalString(m_pEngine, "plot(time3,velocity3, 'b')");
 	engEvalString(m_pEngine, "hold off");
+	*/
+
 	
 
 	std::cout << "Simulations complete, press any key to quit";
 	_getch();
-	engClose(m_pEngine);
+	//engClose(m_pEngine);
 
 	_getch();
 	return 0;
@@ -97,7 +104,6 @@ std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, d
 	std::vector<std::vector<double> > data;
 	std::vector<double> time, vel;
 	
-
 	//Sets initial time and velocity.
 	time.push_back(0);
 	vel.push_back(0);
@@ -158,11 +164,21 @@ std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, d
 {
 	std::vector<std::vector<double> > data;
 	std::vector<double> time, vel, rpm, torque;
-	double maxSpeed, timeMaxSpeed, throttle(1);
+	const double timeToFullThrottle(5);
+	double maxSpeed, timeMaxSpeed, throttle(0);
 
 	//Sets initial time and velocity.
 	time.push_back(0);
 	vel.push_back(0);
+
+	for (int i = 0; i < timeToFullThrottle / _dt; ++i)
+	{
+		throttle = i / (timeToFullThrottle / _dt);
+		vel.push_back(testVehicle.velocity(vel.back(), _dt, &_rho, throttle));
+		time.push_back(time.back() + _dt);
+		rpm.push_back(testVehicle.pubGetRPM());
+		torque.push_back(testVehicle.pubGetTorque(throttle));
+	}
 
 	do
 	{
@@ -170,7 +186,7 @@ std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, d
 		time.push_back(time.back() + _dt);
 		rpm.push_back(testVehicle.pubGetRPM());
 		torque.push_back(testVehicle.pubGetTorque(throttle));
-	} while ((vel.back() - vel.rbegin()[1]) / _dt > .0001); // keep calculating velocity until the acceleration is less than .0001 (essentially at max velocity)
+	} while ((vel.back() - vel.rbegin()[1]) / _dt > .01); // keep calculating velocity until the acceleration is less than .01 (essentially at max velocity)
 
 	std::cout << "Your maximum velocity was " << vel.back() << " m/s  (" << vel.back() * msToMph << " mph)\n";
 	std::cout << "Time to reach maximum velocity: " << time.back() << "seconds." << std::endl;
