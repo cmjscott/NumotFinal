@@ -10,7 +10,6 @@
 class Vehicle
 {
 public:
-
 	// Constructors
 	Vehicle();
 	Vehicle(double _mass, double _Cdrag, double _fDrive);

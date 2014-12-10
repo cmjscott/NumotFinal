@@ -5,15 +5,16 @@
 #endif
 
 const double staticRho(1);
-const double dt(.001); 
 const double msToMph(2.2368);
 
 int main()
 {
-	std::vector<std::vector<double> > test1Data, test2Data, test3Data, test4Data;
+	std::vector<std::vector<double> > test1Data, test2Data, test3Data, test4Data, testData;
 	std::vector<double> time, vel, gearRatios= { 2.785, 1.545, 1, .697 };
-	double rho(1.2041);
+	double rho(1.2041), dt(.001);
 	//double ratioValues[] 
+	int simulationFlag;
+	std::string fileName;
 	
 	std::vector<double> revMap = { 1200, 1600, 2000, 2400, 2800, 3200, 3600, 4000, 4400, 4800, 5200, 5600, 6000, 6400, 6800 };
 	std::vector<double> torqueMap = { 240, 250, 260, 270, 280, 290, 300, 305, 310, 305, 295, 285, 280, 270, 260 };
@@ -38,26 +39,62 @@ int main()
 	*/
 
 	//create vehicle objects for the simulation
-	Vehicle SubaruSim1(1685.1, .32, 1700);
-	Vehicle SubaruSim2(1685.1, .32, 1700, 2.1739);
-	Vehicle SubaruSim3(1685.1, .32, 1700, 2.1739, 7700);
+	//Vehicle SubaruSim1(1685.1, .32, 1700);
+	//Vehicle SubaruSim2(1685.1, .32, 1700, 2.1739);
+	//Vehicle SubaruSim3(1685.1, .32, 1700, 2.1739, 7700);
 	//Vehicle SubaruSim4(1685.1, .32, 2.1739,gearRatios,4.11,.33782,revMap,torqueMap);
 
-	Vehicle SubaruSim4 = generateVehicle();
+	//Vehicle SubaruSim4 = generateVehicle();
+	Vehicle simulationVehicle;
 
+
+	std::cout << "Which simulation would you like to run?" << std::endl;
+	simulationFlag = util::getSanitizedInput<int>();
+
+	std::cout << std::endl << "Enter time step (dt): ";
+	dt = util::getSanitizedInput<double>();
+	std::cout << std::endl;
+
+	if (simulationFlag != 1)
+	{
+		std::cout << std::endl << "Enter air density rho (kg/m^3): ";
+		rho = util::getSanitizedInput<double>();
+	}
+
+	simulationVehicle = generateVehicle(simulationFlag);
+
+	switch (simulationFlag)
+	{
+	case 1:
+		testData = simulation1(simulationVehicle, dt);
+		break;
+	case 2:
+		testData = simulation1(simulationVehicle, dt, rho);
+		break;
+	case 3:
+		testData = simulation3(simulationVehicle, dt, rho);
+		break;
+	case 4:
+		testData = simulation4(simulationVehicle, dt, rho);
+		break;
+	}
+
+	std::cout << std::endl << "Enter name of data file: ";
+	fileName = util::getSanitizedInput<std::string>();
+
+	util::outputData(testData, fileName);
 
 	//Run simulations
 	//test1Data = simulation1(SubaruSim1, dt, staticRho);
 	//test2Data = simulation1(SubaruSim2, dt, rho);
 	//test3Data = simulation3(SubaruSim3, dt, rho);
-	test4Data = simulation4(SubaruSim4, dt, rho);
+	//test4Data = simulation4(SubaruSim4, dt, rho);
 
 	//Output data for matlab
 	//util::outputData(test1Data, "sim1");
 	//util::outputData(test2Data, "sim2");
 	//util::outputData(test3Data, "sim3");
-	util::outputData(test4Data, "sim4Test");
-
+	//util::outputData(test4Data, "sim4Test");
 
 	/*
 	//graph data in matlab
@@ -92,7 +129,6 @@ int main()
 	engEvalString(m_pEngine, "hold off");
 	*/
 
-	
 
 	std::cout << "Simulations complete, press any key to quit";
 	//engClose(m_pEngine);
@@ -100,8 +136,6 @@ int main()
 	_getch();
 	return 0;
 }
-
-
 
 
 std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, double _rho)

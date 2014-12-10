@@ -8,7 +8,7 @@
 
 
 
-Vehicle generateVehicle();
+Vehicle generateVehicle(int simulationFlag);
 
 
 

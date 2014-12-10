@@ -13,6 +13,6 @@
 
 
 
-std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, double _rho);
+std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, double _rho = 1);
 std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt, double _rho);
 std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, double _rho);
