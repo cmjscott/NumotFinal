@@ -3,16 +3,9 @@
 #include <cmath>
 #include <iostream>
 #include <vector>
+
 #define _USE_MATH_DEFINES
 #include <math.h>
-
-
-/*NOTE: Using 2001 Subaru legacy outback wagon, LL bean eddition for testing
-Cd = .32
-A = 23.4 ft^2 = 2.1739 m^2
-mass = 3715 lbs = 1685.1 kg
-*/
-
 
 class Vehicle
 {
@@ -27,7 +20,7 @@ public:
 		double _diffRatios, double wheelRadius,std::vector<double> _revMap, std::vector<double> _torqueMap);
 	
 
-	//member functions
+	//public member functions
 	double velocity(double _currVelocity, double dt, double *rho, double throttle = -1);
 	double brake(double _currVelocity, double dt, double *rho);
 	double engineDriveForce(double throttle);
@@ -35,18 +28,18 @@ public:
 	double pubGetRPM();
 	~Vehicle();
 	
+	//public member variables
+	int simulationFlag;
 
 private:
 
 	//Member private functions
 	double accel(double *rho, double throttle = -1);
 	double deccel(double *rho);
-	double getRPM();
+	double shift();
 	double fDrag(double *rho);    //returns the drag forces ascociated with air resistance
 	double Frr();                 //returns the resistance ascociated with rolling
 	
-
-
 
 	//Member private properties
 	double mass;

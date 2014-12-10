@@ -28,6 +28,7 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive)
 	fDrive = _fDrive;
 	Crr = 30 * Cdrag;
 	frontArea = 2; // Used for simulation 1 where the .5 coefficient must be neutralized.
+	simulationFlag = 1;
 }
 
 //constructor for sim 2
@@ -38,6 +39,7 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalAre
 	fDrive = _fDrive;
 	frontArea = _frontalArea;
 	Crr = 30 * Cdrag;
+	simulationFlag = 2;
 }
 
 //constructor for sim 3
@@ -49,6 +51,7 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalAre
 	frontArea = _frontalArea;
 	fBrake = _fBrake;
 	Crr = 30 * Cdrag;
+	simulationFlag = 3;
 }
 
 //constructor for sim 4
@@ -65,6 +68,7 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<d
 	revMap = _revMap;
 	torqueMap = _torqueMap;
 	currGear = 1;
+	simulationFlag = 4;
 }
 
 
@@ -102,8 +106,11 @@ double Vehicle::accel(double *rho, double throttle)
 	if (throttle == -1)
 		fSum = fDrive + fDrag(rho) + Frr();
 	else
+	{
 		fSum = engineDriveForce(throttle) + fDrag(rho) + Frr();
-
+		shift();
+	}
+		
 	return fSum / mass;
 }
 
@@ -133,7 +140,7 @@ double Vehicle::engineDriveForce(double throttle)
 	return getTorque(throttle) * throttle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius;;
 }
 
-double Vehicle::getRPM()
+double Vehicle::shift()
 {
 	double rpm;
 	rpm = pubGetRPM();
@@ -160,7 +167,7 @@ double Vehicle::getTorque(double throttle)
 	double currRPM, currTorque;
 	int i = 0;
 
-	currRPM = pubGetRPM();
+	currRPM = pubGetRPM();	
 
 	do
 	{

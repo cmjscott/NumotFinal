@@ -6,8 +6,10 @@
 #include <iostream>
 
 
+
 namespace util
 {
+
 	template<typename T, typename A>
 	void outputData(std::vector<std::vector<T, A> > const& vec, std::string _fileName)
 	{
