@@ -11,14 +11,14 @@ const double msToMph(2.2368);
 int main()
 {
 	std::vector<std::vector<double> > test1Data, test2Data, test3Data, test4Data;
-	std::vector<double> time, vel, gearRatios; 
+	std::vector<double> time, vel, gearRatios= { 2.785, 1.545, 1, .697 };
 	double rho(1.2041);
-	double ratioValues[] = { 2.785, 1.545, 1, .697 };
+	//double ratioValues[] 
 	
 	std::vector<double> revMap = { 1200, 1600, 2000, 2400, 2800, 3200, 3600, 4000, 4400, 4800, 5200, 5600, 6000, 6400, 6800 };
 	std::vector<double> torqueMap = { 240, 250, 260, 270, 280, 290, 300, 305, 310, 305, 295, 285, 280, 270, 260 };
 
-	gearRatios.assign(ratioValues, ratioValues + sizeof(ratioValues) / sizeof(double));
+	//gearRatios.assign(ratioValues, ratioValues + sizeof(ratioValues) / sizeof(double));
 
 	/*NOTE: Using 2001 Subaru legacy outback wagon, LL bean eddition for testing
 	Cd = .32
@@ -43,17 +43,19 @@ int main()
 	Vehicle SubaruSim3(1685.1, .32, 1700, 2.1739, 7700);
 	Vehicle SubaruSim4(1685.1, .32, 2.1739,gearRatios,4.11,.33782,revMap,torqueMap);
 
+	Vehicle* test = generateVehicle();
+
 	//Run simulations
-	//test1Data = simulation1(SubaruSim1, dt, staticRho);
-	//test2Data = simulation1(SubaruSim2, dt, rho);
-	//test3Data = simulation3(SubaruSim3, dt, rho);
-	test4Data = simulation4(SubaruSim4, dt, rho);
+	//test1Data = simulation1(&SubaruSim1, dt, staticRho);
+	//test2Data = simulation1(&SubaruSim2, dt, rho);
+	//test3Data = simulation3(&SubaruSim3, dt, rho);
+	//test4Data = simulation4(&SubaruSim4, dt, rho);
 
 	//Output data for matlab
 	//util::outputData(test1Data, "sim1");
 	//util::outputData(test2Data, "sim2");
 	//util::outputData(test3Data, "sim3");
-	util::outputData(test4Data, "sim4");
+	//util::outputData(test4Data, "sim4");
 
 
 	/*
@@ -92,14 +94,16 @@ int main()
 	
 
 	std::cout << "Simulations complete, press any key to quit";
-	_getch();
 	//engClose(m_pEngine);
 
 	_getch();
 	return 0;
 }
 
-std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, double _rho)
+
+
+
+std::vector<std::vector<double> > simulation1(Vehicle *testVehicle, double _dt, double _rho)
 {
 	std::vector<std::vector<double> > data;
 	std::vector<double> time, vel;
@@ -110,7 +114,7 @@ std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, d
 
 	do
 	{
-		vel.push_back(testVehicle.velocity(vel.back(), _dt, &_rho));
+		vel.push_back(testVehicle->velocity(vel.back(), _dt, &_rho));
 		time.push_back(time.back() + _dt);
 	} while ((vel.back() - vel.rbegin()[1])/_dt > .0001); // keep calculating velocity until the acceleration is less than .0001 (essentially at max velocity)
 
@@ -122,7 +126,7 @@ std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, d
 	return data;
 }
 
-std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt, double _rho)
+std::vector<std::vector<double> > simulation3(Vehicle* testVehicle, double _dt, double _rho)
 {
 	std::vector<std::vector<double> > data;
 	std::vector<double> time, vel;
@@ -135,7 +139,7 @@ std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt, d
 
 	do
 	{
-		vel.push_back(testVehicle.velocity(vel.back(), _dt, &_rho));
+		vel.push_back(testVehicle->velocity(vel.back(), _dt, &_rho));
 		time.push_back(time.back() + _dt);
 	} while ((vel.back() - vel.rbegin()[1]) / _dt > .0001); // keep calculating velocity until the acceleration is less than .0001 (essentially at max velocity)
 
@@ -144,7 +148,7 @@ std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt, d
 	
 	do
 	{
-		vel.push_back(testVehicle.brake(vel.back(), _dt, &_rho));
+		vel.push_back(testVehicle->brake(vel.back(), _dt, &_rho));
 		time.push_back(time.back() + _dt);
 	} while (vel.back() > 0);
 
@@ -160,7 +164,7 @@ std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt, d
 	return data;
 }
 
-std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, double _rho)
+std::vector<std::vector<double> > simulation4(Vehicle* testVehicle, double _dt, double _rho)
 {
 	std::vector<std::vector<double> > data;
 	std::vector<double> time, vel, rpm, force, torque;
@@ -177,20 +181,20 @@ std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, d
 	for (int i = 0; i < timeToFullThrottle / _dt; ++i)
 	{
 		throttle = i / (timeToFullThrottle / _dt);
-		vel.push_back(testVehicle.velocity(vel.back(), _dt, &_rho, throttle));
+		vel.push_back(testVehicle->velocity(vel.back(), _dt, &_rho, throttle));
 		time.push_back(time.back() + _dt);
-		rpm.push_back(testVehicle.pubGetRPM());
-		force.push_back(testVehicle.engineDriveForce(throttle));
-		torque.push_back(testVehicle.getTorque(throttle));
+		rpm.push_back(testVehicle->pubGetRPM());
+		force.push_back(testVehicle->engineDriveForce(throttle));
+		torque.push_back(testVehicle->getTorque(throttle));
 	}
 
 	do
 	{
-		vel.push_back(testVehicle.velocity(vel.back(), _dt, &_rho, throttle));
+		vel.push_back(testVehicle->velocity(vel.back(), _dt, &_rho, throttle));
 		time.push_back(time.back() + _dt);
-		rpm.push_back(testVehicle.pubGetRPM());
-		force.push_back(testVehicle.engineDriveForce(throttle));
-		torque.push_back(testVehicle.getTorque(throttle));
+		rpm.push_back(testVehicle->pubGetRPM());
+		force.push_back(testVehicle->engineDriveForce(throttle));
+		torque.push_back(testVehicle->getTorque(throttle));
 	} while ((vel.back() - vel.rbegin()[1]) / _dt > .1); // keep calculating velocity until the acceleration is less than .01 (essentially at max velocity)
 
 	std::cout << "Your maximum velocity was " << vel.back() << " m/s  (" << vel.back() * msToMph << " mph)\n";

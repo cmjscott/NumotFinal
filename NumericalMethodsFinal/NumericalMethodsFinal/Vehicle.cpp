@@ -1,7 +1,5 @@
 #include "Vehicle.h"
 
-
-
 /*NOTE: Using 2001 Subaru legacy outback wagon, LL bean eddition for testing
 Cd = .32
 A = 23.4 ft^2 = 2.1739 m^2
@@ -139,7 +137,7 @@ double Vehicle::getRPM()
 {
 	double rpm;
 	rpm = pubGetRPM();
-	if (rpm > 4000 && currGear <= gearRatios.size())
+	if (rpm > 5000 && currGear < gearRatios.size())
 		++currGear;
 
 	return rpm;
@@ -162,7 +160,7 @@ double Vehicle::getTorque(double throttle)
 	double currRPM, currTorque;
 	int i = 0;
 
-	currRPM = getRPM();
+	currRPM = pubGetRPM();
 
 	do
 	{

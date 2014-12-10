@@ -48,6 +48,9 @@
     <ClInclude Include="matlabFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="generateVehicle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Vehicle.cpp">
@@ -76,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Numot\Homework_3\Homework_3\mainn.cpp">
       <Filter>excluded</Filter>
+    </ClCompile>
+    <ClCompile Include="generateVehicle.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
