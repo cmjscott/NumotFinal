@@ -150,9 +150,14 @@ void Vehicle::shift()
 	if ((currentRPM - upshiftedRPM) / 2 >= (revMap[peakTorqueIndex] - upshiftedRPM))
 	{
 		++currGear;
-		std::cout << "Shifted gears at " << currentRPM << std::endl;
+
+		if (currGear == 2)
+			std::cout << "Shifted to 2nd gear at " << currentRPM << " rpm." << std::endl;
+		else if (currGear == 3)
+			std::cout << "Shifted to 3rd gear at " << currentRPM << " rpm." << std::endl;
+		else 
+			std::cout << "Shifted to " << currGear << "th gear at " << currentRPM << " rpm." << std::endl;
 	}
-	
 }
 
 double Vehicle::pubGetRPM()
@@ -161,8 +166,8 @@ double Vehicle::pubGetRPM()
 	rpm = currVelocity / wheelRadius *(60 / (2 * M_PI)) * gearRatios[currGear-1] * diffRatio;
 	if (rpm < 3000 && currGear == 1)
 		rpm = 3000;
-	if (rpm > 6800)
-		rpm = 6800;
+	if (rpm > revMap.back())
+		rpm = revMap.back();
 
 	return rpm;
 }
