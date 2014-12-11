@@ -3,7 +3,6 @@
 #include <cmath>
 #include <iostream>
 #include <vector>
-
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -35,9 +34,10 @@ private:
 	//Member private functions
 	double accel(double *rho, double throttle = -1);
 	double deccel(double *rho);
-	double shift();
+	void shift();
 	double fDrag(double *rho);    //returns the drag forces ascociated with air resistance
 	double Frr();                 //returns the resistance ascociated with rolling
+	int findPeakTorque();
 	
 
 	//Member private properties
@@ -55,7 +55,7 @@ private:
 	double diffRatio;
 	double wheelRadius;
 	int currGear;
+	int peakTorqueIndex;
 	static double transEff;
-
 };
 

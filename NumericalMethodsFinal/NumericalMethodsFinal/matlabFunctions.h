@@ -8,8 +8,6 @@
 
 
 
-void funct(engine* m_pEngine);
-
 template <typename T, typename A>
 void vecToMatlab(engine* ptrEngine, std::vector<T,A> const& vec, std::string varName)
 {
@@ -21,3 +19,5 @@ void vecToMatlab(engine* ptrEngine, std::vector<T,A> const& vec, std::string var
 	engPutVariable(ptrEngine, varName.c_str(), VAR); //creates a matlab variable using the passed string
 	mxDestroyArray(VAR);
 }
+
+

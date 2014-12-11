@@ -69,13 +69,13 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<d
 	torqueMap = _torqueMap;
 	currGear = 1;
 	simulationFlag = 4;
+	peakTorqueIndex = findPeakTorque();
 }
 
 
 //Honestly not 100% sure what this does.
 Vehicle::~Vehicle() {}
  
-
 //Returns the next velocity after dt time has passed, based on current velocity
 double Vehicle::velocity(double _currVelocity, double dt, double *rho, double throttle)
 {
@@ -132,22 +132,27 @@ double Vehicle::Frr()
 	return -Crr * currVelocity;
 }
 
-
-// change name and remove fTorque. There is no need for two functions.
-// make throttle a member variable and just set it
 double Vehicle::engineDriveForce(double throttle)
 {
 	return getTorque(throttle) * throttle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius;;
 }
 
-double Vehicle::shift()
+void Vehicle::shift()
 {
-	double rpm;
-	rpm = pubGetRPM();
-	if (rpm > 5000 && currGear < gearRatios.size())
-		++currGear;
+	double currentRPM, upshiftedRPM;
+	currentRPM = pubGetRPM();
 
-	return rpm;
+	if (currGear >= gearRatios.size()) 
+		return;
+
+	upshiftedRPM = currVelocity / wheelRadius *(60 / (2 * M_PI)) * gearRatios[currGear] * diffRatio;
+
+	if ((currentRPM - upshiftedRPM) / 2 >= (revMap[peakTorqueIndex] - upshiftedRPM))
+	{
+		++currGear;
+		std::cout << "Shifted gears at " << currentRPM << std::endl;
+	}
+	
 }
 
 double Vehicle::pubGetRPM()
@@ -170,11 +175,22 @@ double Vehicle::getTorque(double throttle)
 	currRPM = pubGetRPM();	
 
 	do
-	{
 		++i;
-	} while (currRPM < revMap[i]);
+	while (currRPM < revMap[i]);
 
 	currTorque = torqueMap[i - 1] + (currRPM - revMap[i - 1])*(torqueMap[i] - torqueMap[i - 1]) / (revMap[i] - revMap[i - 1]);
 
 	return currTorque;
 }
+
+int Vehicle::findPeakTorque()
+{
+	int i = 0;
+
+	do
+		++i;
+	while (torqueMap[i] > torqueMap[i-1]);
+
+	return i - 1;
+}
+
