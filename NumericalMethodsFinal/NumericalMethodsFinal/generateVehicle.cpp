@@ -51,18 +51,8 @@ Vehicle generateVehicle(int simulationFlag)
 
 	std::cout << std::endl << "Enter differential ratio: ";
 	diffRatio = util::getSanitizedInput<double>();
-
 	
-	std::cout << std::endl << "Use default values for transmission? (Y/N) : ";
-	yesNo = util::getSanitizedInput<char>();
-
-	while (yesNo != 'Y' && yesNo != 'N')
-	{
-		std::cout << "Try again. Enter 'Y' for yes, and 'N' for no. Inputs are case sensitive.\nEnter 'Y' or 'N' : ";
-		yesNo = util::getSanitizedInput<char>();
-	}
-
-	if (yesNo == 'Y')
+	if (util::yesNo("Use default values for transmission?"))
 	{
 		gearRatios = { 2.785, 1.545, 1, .697 };
 
@@ -103,17 +93,8 @@ Vehicle generateVehicle(int simulationFlag)
 			gearRatios[i] = util::getSanitizedInput<double>();
 		}
 	}
-	
-	std::cout << std::endl << "Use default values for torque curve? (Y/N) : ";
-	yesNo = util::getSanitizedInput<char>();
 
-	while (yesNo != 'Y' && yesNo != 'N')
-	{
-		std::cout << "Try again. Enter 'Y' for yes, and 'N' for no. Inputs are case sensitive.\nEnter 'Y' or 'N' : ";
-		yesNo = util::getSanitizedInput<char>();
-	}
-
-	if (yesNo == 'Y')
+	if (util::yesNo("Use default values for torque curve?"))
 	{
 		revMap = { 1200, 1600, 2000, 2400, 2800, 3200, 3600, 4000, 4400, 4800, 5200, 5600, 6000, 6400, 6800 };
 		torqueMap = { 240, 250, 260, 270, 280, 290, 300, 305, 310, 305, 295, 285, 280, 270, 260 };

@@ -13,63 +13,69 @@ int main()
 	std::string fileName;
 	double rho, dt;
 	int simulationFlag;
+	char yesNo;
 	Vehicle simulationVehicle;
 
 	//gearRatios.assign(ratioValues, ratioValues + sizeof(ratioValues) / sizeof(double));
 
-	std::cout << "Which simulation would you like to run? (1, 2, 3, 4)" << std::endl;
-	simulationFlag = util::getSanitizedInput<int>();
-	std::cout << std::endl;
-
-
-	if (simulationFlag == 99)
+	do
 	{
-		functionalityDemonstration();
-		std::cout << "Demonstration simulations complete, press any key to quit";
-		_getch();
-		return 0;
-	}
-		
+		std::cout << "Which simulation would you like to run? (1, 2, 3, 4)" << std::endl;
+		simulationFlag = util::getSanitizedInput<int>();
+		std::cout << std::endl;
 
-	std::cout << std::endl << "Enter time step (dt): ";
-	dt = util::getSanitizedInput<double>();
-	std::cout << std::endl;
+		if (simulationFlag == 99)
+		{
+			functionalityDemonstration();
+			std::cout << "Demonstration simulations complete, press any key to quit";
+			_getch();
+			return 0;
+		}
 
-	if (simulationFlag != 1)
-	{
-		std::cout << std::endl << "Enter air density rho (kg/m^3): ";
-		rho = util::getSanitizedInput<double>();
-	}
+		std::cout << std::endl << "Enter time step (dt): ";
+		dt = util::getSanitizedInput<double>();
+		std::cout << std::endl;
 
-	simulationVehicle = generateVehicle(simulationFlag);
+		if (simulationFlag != 1)
+		{
+			std::cout << std::endl << "Enter air density rho (kg/m^3): ";
+			rho = util::getSanitizedInput<double>();
+		}
 
-	switch (simulationFlag)
-	{
-	case 1:
-		testData = simulation1(simulationVehicle, dt);
-		break;
-	case 2:
-		testData = simulation1(simulationVehicle, dt, rho);
-		break;
-	case 3:
-		testData = simulation3(simulationVehicle, dt, rho);
-		break;
-	case 4:
-		testData = simulation4(simulationVehicle, dt, rho);
-		break;
-	}
+		simulationVehicle = generateVehicle(simulationFlag);
 
-	std::cout << std::endl << "Enter name of data file: ";
-	fileName = util::getSanitizedInput<std::string>();
+		switch (simulationFlag)
+		{
+		case 1:
+			testData = simulation1(simulationVehicle, dt);
+			break;
+		case 2:
+			testData = simulation1(simulationVehicle, dt, rho);
+			break;
+		case 3:
+			testData = simulation3(simulationVehicle, dt, rho);
+			break;
+		case 4:
+			testData = simulation4(simulationVehicle, dt, rho);
+			break;
+		}
 
-	util::outputData(testData, fileName);
+		if (util::yesNo("Write results to file?"))
+		{
+			std::cout << std::endl << "Enter name of data file: ";
+			fileName = util::getSanitizedInput<std::string>();
+
+			util::outputData(testData, fileName);
+		}
+
+
+	} while (util::yesNo("Run another simulation?")); //loop back through code and run another simulation.
 
 	std::cout << "Simulations complete, press any key to quit";
 	_getch();
 
 	return 0;
 }
-
 
 std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, double _rho)
 {

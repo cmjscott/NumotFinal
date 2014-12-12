@@ -7,8 +7,15 @@
 
 
 
+typedef enum {
+	UNSIGNED,
+	SIGNED
+} signedFlag_e;
+
+
 namespace util
 {
+	bool yesNo(std::string promptText);
 
 	template<typename T, typename A>
 	void outputData(std::vector<std::vector<T, A> > const& vec, std::string _fileName)
@@ -45,7 +52,7 @@ namespace util
 	}
 
 	template <typename T>
-	T getSanitizedInput()
+	T getSanitizedInput(signedFlag_e _signFlag)
 	{
 		T terminalInput;
 		bool failedInput = true;
