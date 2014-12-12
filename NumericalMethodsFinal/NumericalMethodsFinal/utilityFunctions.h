@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <climits>
 
 
 
@@ -53,7 +54,7 @@ namespace util
 	}
 
 	template <typename T>
-	T getSanitizedInput(signedFlag_e _signFlag = NON_NUMERIC)
+	T getSanitizedInput(double lBound = LONG_MIN, double uBound = LONG_MAX,  signedFlag_e _signFlag = NON_NUMERIC)
 	{
 		T terminalInput;
 		bool failedInput = true;
@@ -78,10 +79,26 @@ namespace util
 			{
 				std::cout << "Error: invalid data entered." << std::endl << "Re-enter value as (" << typeid(T).name() << "): ";
 			}
-			else {
+			else 
+			{
+				switch (_signFlag)
+				{
+				case UNSIGNED:
+
+					break;
+				case SIGNED:
+
+					break;
+				default:
+					break;
+				}
+
+
 				failedInput = false;
 			}
 		} while (failedInput);
+
+		
 
 		return terminalInput;
 	}

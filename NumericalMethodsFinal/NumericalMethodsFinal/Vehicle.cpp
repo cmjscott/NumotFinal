@@ -79,7 +79,6 @@ Vehicle::~Vehicle() {}
 //Returns the next velocity after dt time has passed, based on current velocity
 double Vehicle::velocity(double _currVelocity, double dt, double *rho, double throttle)
 {
-
 	double acceleration;
 	currVelocity = _currVelocity;
 	if (throttle == -1)
@@ -114,7 +113,7 @@ double Vehicle::accel(double *rho, double throttle)
 	return fSum / mass;
 }
 
-
+//calculates the force on the vehicle due to braking
 double Vehicle::deccel(double *rho)
 {
 	double fSum;
@@ -122,29 +121,35 @@ double Vehicle::deccel(double *rho)
 	return fSum / mass;
 }
 
+//calculates the aerodynamic drag forces
 double Vehicle::fDrag(double *rho)
 {
 	return -0.5 * Cdrag * frontArea * (*rho) * std::pow(currVelocity, 2);
 }
 
+//calculates the rolling resistances
 double Vehicle::Frr()
 {
 	return -Crr * currVelocity;
 }
 
+//calculates the drive force based on throttle and torque
 double Vehicle::engineDriveForce(double throttle)
 {
 	return getTorque(throttle) * throttle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius;;
 }
 
+//figures out if the car should shift or not.
 void Vehicle::shift()
 {
 	double currentRPM, upshiftedRPM;
 	currentRPM = pubGetRPM();
 
+	//will do nothing if the current gear is equal to the number of gears in the gearbox
 	if (currGear >= gearRatios.size()) 
 		return;
 
+	//calculates the rpm value at the current speed if the gear were increased to the next gear
 	upshiftedRPM = currVelocity / wheelRadius *(60 / (2 * M_PI)) * gearRatios[currGear] * diffRatio;
 
 	if ((currentRPM - upshiftedRPM) / 2 >= (revMap[peakTorqueIndex] - upshiftedRPM))
@@ -160,6 +165,7 @@ void Vehicle::shift()
 	}
 }
 
+//calculates the current rpm based on current velocity and gear ratio. 
 double Vehicle::pubGetRPM()
 {
 	double rpm;
@@ -172,6 +178,7 @@ double Vehicle::pubGetRPM()
 	return rpm;
 }
 
+//calculates torque based on current rpm and throttle position
 double Vehicle::getTorque(double throttle)
 {
 	double currRPM, currTorque;
@@ -179,15 +186,18 @@ double Vehicle::getTorque(double throttle)
 
 	currRPM = pubGetRPM();	
 
+	// does a linear search on the rpm vector in the torque to get the position of the current rpm on the torque curve
 	do
 		++i;
 	while (currRPM < revMap[i]);
 
+	//linear interpolation of current rpm on the torque curve
 	currTorque = torqueMap[i - 1] + (currRPM - revMap[i - 1])*(torqueMap[i] - torqueMap[i - 1]) / (revMap[i] - revMap[i - 1]);
 
 	return currTorque;
 }
 
+//finds the rpm value where peak torque is generated on the torque curve
 int Vehicle::findPeakTorque()
 {
 	int i = 0;
