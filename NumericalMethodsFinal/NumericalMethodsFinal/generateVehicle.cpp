@@ -1,15 +1,17 @@
 #include "generateVehicle.h"
 
-int loopCount;
-char yesNo;
-double mass, Cdrag, frontArea, diffRatio, wheelRadius, rpmHold, maxRpm, driveForce, brakingForce;
-std::vector<double> gearRatios, revMap, torqueMap;
+
+
 
 
 
 
 Vehicle generateVehicle(int simulationFlag)
 {
+	//Variable declarations
+	int loopCount;
+	double mass, Cdrag, frontArea, diffRatio, wheelRadius, valueHold, maxRpm, driveForce, brakingForce;
+	std::vector<double> gearRatios, revMap, torqueMap;
 	Vehicle returnVehicle;
 
 
@@ -21,30 +23,43 @@ Vehicle generateVehicle(int simulationFlag)
 	std::cout << std::endl << "Enter Cd: ";
 	Cdrag =util::getSanitizedInput<double>();
 	
+	//Prompts user for a drive force unless simulation 4 was selected
 	if (simulationFlag != 4)
 	{
 		std::cout << std::endl << "Enter drive force (N): ";
 		driveForce = util::getSanitizedInput<double>();
 	}
 
+	//Vehicle creation is complete if simulation 1 was selected. Returns vehicle.
 	if (simulationFlag == 1)
+	{
+		std::cout << std::endl << "Created vehicle for simulation " << simulationFlag << ". Press any key to continue" << std::endl << std::endl;
+		_getch();
 		return Vehicle(mass, Cdrag, driveForce);
-
-
+	}
+		
 	std::cout << std::endl << "Enter front area (m^2): ";
 	frontArea = util::getSanitizedInput<double>();
 
+	//Vehicle creation is complete if simulation 2 was selected. Returns vehicle.
 	if (simulationFlag == 2)
+	{
+		std::cout << std::endl << "Created vehicle for simulation " << simulationFlag << ". Press any key to continue" << std::endl << std::endl;
+		_getch();
 		return Vehicle(mass, Cdrag, driveForce, frontArea);
+	}
 	
-
+	//Vehicle creation is complete if simulation 3 was selected once a braking force is input. Returns vehicle.
 	if (simulationFlag == 3)
 	{
 		std::cout << std::endl << "Enter braking force (N): ";
 		brakingForce = util::getSanitizedInput<double>();
 
+		std::cout << std::endl << "Created vehicle for simulation " << simulationFlag << ". Press any key to continue" << std::endl << std::endl;
+		_getch();
 		return Vehicle(mass, Cdrag, driveForce,frontArea,brakingForce);
 	}
+
 
 	std::cout << std::endl << "Enter wheel radius (m): ";
 	wheelRadius = util::getSanitizedInput<double>();
@@ -52,6 +67,8 @@ Vehicle generateVehicle(int simulationFlag)
 	std::cout << std::endl << "Enter differential ratio: ";
 	diffRatio = util::getSanitizedInput<double>();
 	
+	//Prompts user if they want to use default transmission values
+	//Default transmission values are from a 2001 subaru outback H6
 	if (util::yesNo("Use default values for transmission?"))
 	{
 		gearRatios = { 2.785, 1.545, 1, .697 };
@@ -87,13 +104,26 @@ Vehicle generateVehicle(int simulationFlag)
 		loopCount = util::getSanitizedInput<int>();
 		gearRatios.resize(loopCount);
 
+		//Prompts user to enter
 		for (int i = 0; i < loopCount; ++i)
 		{
 			std::cout << "Enter gear ratio for gear " << (i + 1) << ": ";
-			gearRatios[i] = util::getSanitizedInput<double>();
-		}
-	}
 
+			if (i == 0)
+				valueHold = util::getSanitizedInput<double>();
+			else
+			{
+				//This doesn't quite work. It should make sure that the user enters in a smaller gear ratio than the one before it.
+				do
+					valueHold = util::getSanitizedInput<double>();
+				while (valueHold >= gearRatios[i-1]);
+			}
+			gearRatios[i] = valueHold;
+		}
+	} //if (util::yesNo("Use default values for transmission?"))
+
+	//Prompts user if they want to use the default torque table
+	//Default torque and RPM values are from a 2001 subaru outback H6
 	if (util::yesNo("Use default values for torque curve?"))
 	{
 		revMap = { 1200, 1600, 2000, 2400, 2800, 3200, 3600, 4000, 4400, 4800, 5200, 5600, 6000, 6400, 6800 };
@@ -105,6 +135,7 @@ Vehicle generateVehicle(int simulationFlag)
 		std::cout << "___________________" << std::endl;
 		std::cout << std::left;
 
+		//Prints out the formatted default torque table to the console
 		for (int i = 0; i < revMap.size(); ++i)
 		{
 			std::cout << std::setw(3) << i + 1 << "|  " << std::setw(5) << revMap[i] << "|  " << std::setw(5) << torqueMap[i] << std::endl;
@@ -125,16 +156,18 @@ Vehicle generateVehicle(int simulationFlag)
 		{
 			std::cout << "Entry #: " << loopCount << std::endl;
 			std::cout << "RPM(" << loopCount << ") = ";
+
+			//Prompts user for RPM and torque values until the entered RPM excedes the maximum RPM value.
 			if (revMap.size() > 0)
 			{
 				do
-					rpmHold = util::getSanitizedInput<double>();
-				while (rpmHold <= revMap.back());
+					valueHold = util::getSanitizedInput<double>();
+				while (valueHold <= revMap.back());
 			}
 			else
-				rpmHold = util::getSanitizedInput<double>();
+				valueHold = util::getSanitizedInput<double>();
 
-			revMap.push_back(rpmHold);
+			revMap.push_back(valueHold);
 
 			std::cout << "Torque(" << loopCount << ") = ";
 			torqueMap.push_back(util::getSanitizedInput<double>());

@@ -9,7 +9,8 @@
 
 typedef enum {
 	UNSIGNED,
-	SIGNED
+	SIGNED, 
+	NON_NUMERIC
 } signedFlag_e;
 
 
@@ -52,7 +53,7 @@ namespace util
 	}
 
 	template <typename T>
-	T getSanitizedInput(signedFlag_e _signFlag)
+	T getSanitizedInput(signedFlag_e _signFlag = NON_NUMERIC)
 	{
 		T terminalInput;
 		bool failedInput = true;

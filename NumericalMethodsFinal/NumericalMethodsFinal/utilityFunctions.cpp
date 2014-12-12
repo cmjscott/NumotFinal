@@ -20,5 +20,4 @@ namespace util
 		else
 			return false;
 	}
-
 }

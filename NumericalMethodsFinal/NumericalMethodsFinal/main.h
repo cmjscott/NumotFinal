@@ -8,7 +8,7 @@
 #include "Vehicle.h"
 #include <string>
 #include "utilityFunctions.h"
-#include "matlabFunctions.h"
+//#include "matlabFunctions.h"
 #include "generateVehicle.h"
 
 
