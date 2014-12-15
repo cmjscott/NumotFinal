@@ -8,13 +8,6 @@
 
 
 
-typedef enum {
-	UNSIGNED,
-	SIGNED, 
-	NON_NUMERIC
-} signedFlag_e;
-
-
 namespace util
 {
 	bool yesNo(std::string promptText);
@@ -54,7 +47,7 @@ namespace util
 	}
 
 	template <typename T>
-	T getSanitizedInput(double lBound = LONG_MIN, double uBound = LONG_MAX,  signedFlag_e _signFlag = NON_NUMERIC)
+	T getSanitizedInput(double lBound = LONG_MIN, double uBound = LONG_MAX)
 	{
 		T terminalInput;
 		bool failedInput = true;
@@ -81,24 +74,9 @@ namespace util
 			}
 			else 
 			{
-				switch (_signFlag)
-				{
-				case UNSIGNED:
-
-					break;
-				case SIGNED:
-
-					break;
-				default:
-					break;
-				}
-
-
 				failedInput = false;
 			}
 		} while (failedInput);
-
-		
 
 		return terminalInput;
 	}

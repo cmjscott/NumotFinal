@@ -11,7 +11,7 @@ int main()
 	std::vector<std::vector<double> > test1Data, test2Data, test3Data, test4Data, testData;
 	std::vector<double> time, vel, gearRatios= { 2.785, 1.545, 1, .697 };
 	std::string fileName;
-	double rho, dt;
+	double rho, dt, timeToFullThrottle;
 	int simulationFlag;
 	char yesNo;
 	Vehicle simulationVehicle;
@@ -21,7 +21,7 @@ int main()
 	do
 	{
 		std::cout << "Which simulation would you like to run? (1, 2, 3, 4)" << std::endl;
-		simulationFlag = util::getSanitizedInput<int>();
+		simulationFlag = util::getSanitizedInput<int>(1,4);
 		std::cout << std::endl;
 
 		if (simulationFlag == 99)
@@ -56,7 +56,10 @@ int main()
 			testData = simulation3(simulationVehicle, dt, rho);
 			break;
 		case 4:
-			testData = simulation4(simulationVehicle, dt, rho);
+			std::cout << std::endl << "Enter time to full throttle: ";
+			timeToFullThrottle = util::getSanitizedInput<double>();
+			std::cout << std::endl;
+			testData = simulation4(simulationVehicle, dt, rho, timeToFullThrottle);
 			break;
 		}
 
