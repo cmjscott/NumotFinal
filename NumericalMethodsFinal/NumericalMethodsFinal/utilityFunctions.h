@@ -12,6 +12,7 @@ namespace util
 {
 	bool yesNo(std::string promptText);
 
+	//outputs a data matrix to the user's documents folder as a .dat file with the given filename
 	template<typename T, typename A>
 	void outputData(std::vector<std::vector<T, A> > const& vec, std::string _fileName)
 	{
@@ -46,6 +47,8 @@ namespace util
 		std::cout << "Sucsess writing data to:" << std::endl << filePath << std::endl << std::endl;
 	}
 
+
+	//gets input from cin and will loop until the input is of the specified type, rejecting invalid inputs.
 	template <typename T>
 	T getSanitizedInput(double lBound = LONG_MIN, double uBound = LONG_MAX)
 	{

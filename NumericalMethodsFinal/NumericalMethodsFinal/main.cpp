@@ -18,6 +18,8 @@ int main()
 
 	//gearRatios.assign(ratioValues, ratioValues + sizeof(ratioValues) / sizeof(double));
 
+
+	//prompts user to chose a simulation and then prompts them for each required input.
 	do
 	{
 		std::cout << "Which simulation would you like to run? (1, 2, 3, 4)" << std::endl;
@@ -42,8 +44,10 @@ int main()
 			rho = util::getSanitizedInput<double>();
 		}
 
+		//creates a test vehicle based on simulation value entered
 		simulationVehicle = generateVehicle(simulationFlag);
 
+		//based on the simulation value entered, runs the corrisponding simulation
 		switch (simulationFlag)
 		{
 		case 1:
@@ -63,6 +67,7 @@ int main()
 			break;
 		}
 
+		//promps user if they want to save the simulation data
 		if (util::yesNo("Write results to file?"))
 		{
 			std::cout << std::endl << "Enter name of data file: ";
@@ -203,6 +208,7 @@ std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, d
 	} while ((vel.back() - vel.rbegin()[1]) / _dt > .1); // keep calculating velocity until the acceleration is less than .01 (essentially at max velocity)
 
 	std::cout << std::endl << "Your maximum velocity was " << vel.back() << " m/s  (" << vel.back() * msToMph << " mph)" << std::endl;
+	std::cout << "Time to reach maximum throttle position: " << timeToFullThrottle << " seconds." << std::endl;
 	std::cout << "Time to reach maximum velocity: " << time.back() << " seconds." << std::endl;
 	std::cout << "0 - 60 time: " << zeroToSixtyTime << " seconds." << std::endl;
 	std::cout << "--------------------------------------------------------------------------------" << std::endl << std::endl;
@@ -244,6 +250,7 @@ void functionalityDemonstration()
 	std::vector<double> gearRatios = { 2.785, 1.545, 1, .697 };
 	double rho(1.2041), dt(.001), mass(1685.1), Cdrag(.32), driveForce(1700), frontArea(2.1739), brakingForce(7700), diffRatio(4.11), wheelRadius(.33782);
 
+	//create vehicle objects for each simulation
 	Vehicle SubaruSim1(mass, Cdrag, driveForce);
 	Vehicle SubaruSim2(mass, Cdrag, driveForce, frontArea);
 	Vehicle SubaruSim3(mass, Cdrag, driveForce, frontArea, brakingForce);
@@ -263,44 +270,3 @@ void functionalityDemonstration()
 
 }
 
-void matlabScript()
-{
-	/*
-
-	unfinished, will fix later.
-
-	//graph data in matlab
-
-	Engine *m_pEngine; //name the matlab engine variable
-	m_pEngine = engOpen("null"); //open an instance of the matlab engine
-
-	vecToMatlab(m_pEngine, test1Data[0], "time1");
-	vecToMatlab(m_pEngine, test1Data[1], "velocity1");
-
-	vecToMatlab(m_pEngine, test2Data[0], "time2");
-	vecToMatlab(m_pEngine, test2Data[1], "velocity2");
-
-	vecToMatlab(m_pEngine, test3Data[0], "time3");
-	vecToMatlab(m_pEngine, test3Data[1], "velocity3");
-
-	vecToMatlab(m_pEngine, test4Data[0], "time4");
-	vecToMatlab(m_pEngine, test4Data[1], "velocity4");
-	vecToMatlab(m_pEngine, test4Data[2], "rpm4");
-	vecToMatlab(m_pEngine, test4Data[3], "torque4");
-
-
-	engEvalString(m_pEngine, "figure('name','Simulation 1 and 2')"); // opens up matlab figure window
-	engEvalString(m_pEngine, "hold on");
-	engEvalString(m_pEngine, "plot(time1,velocity1, 'r')");
-	engEvalString(m_pEngine, "plot(time2,velocity2, 'b')");
-	engEvalString(m_pEngine, "hold off");
-
-	engEvalString(m_pEngine, "figure('name','Simulation 3')"); // opens up matlab figure window
-	engEvalString(m_pEngine, "hold on");
-	engEvalString(m_pEngine, "plot(time3,velocity3, 'b')");
-	engEvalString(m_pEngine, "hold off");
-
-	_getch();
-	engClose(m_pEngine);
-	*/
-}

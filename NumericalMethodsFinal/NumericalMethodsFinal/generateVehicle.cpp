@@ -4,7 +4,7 @@
 
 
 
-
+// prompts user for inputs for all vehicle parameters based on the chosen simulation and returns a vehicle object with the input parameters.
 
 Vehicle generateVehicle(int simulationFlag)
 {

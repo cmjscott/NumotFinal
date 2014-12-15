@@ -11,10 +11,10 @@ class Vehicle
 public:
 	// Constructors
 	Vehicle();
-	Vehicle(double _mass, double _Cdrag, double _fDrive);
-	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea);
-	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea, double _fBrake);
-	Vehicle(double _mass, double _Cdrag, double _frontalArea,std::vector<double> _gearRatio,
+	Vehicle(double _mass, double _Cdrag, double _fDrive);															//constructor for simulation 1
+	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea);										//constructor for simulation 2
+	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea, double _fBrake);						//constructor for simulation 3
+	Vehicle(double _mass, double _Cdrag, double _frontalArea,std::vector<double> _gearRatio,						// constructor for simulation 4
 		double _diffRatios, double wheelRadius,std::vector<double> _revMap, std::vector<double> _torqueMap);
 	
 
@@ -34,7 +34,7 @@ private:
 	//Member private functions
 	double accel(double *rho, double throttle = -1);
 	double deccel(double *rho);
-	void shift();
+	void shift();				  //shifts if rpm range is ideal
 	double fDrag(double *rho);    //returns the drag forces ascociated with air resistance
 	double Frr();                 //returns the resistance ascociated with rolling
 	int findPeakTorque();

@@ -163,9 +163,7 @@
     </ClInclude>
     <ClInclude Include="generateVehicle.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="matlabFunctions.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="matlabFunctions.h" />
     <ClInclude Include="utilityFunctions.h" />
     <ClInclude Include="Vehicle.h" />
   </ItemGroup>

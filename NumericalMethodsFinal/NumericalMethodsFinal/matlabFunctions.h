@@ -8,7 +8,7 @@
 #include <cmath> // for math stuff
 #include <vector>
 
-
+//depreciated due to compilation issues on other systems
 
 template <typename T, typename A>
 void vecToMatlab(engine* ptrEngine, std::vector<T,A> const& vec, std::string varName)
