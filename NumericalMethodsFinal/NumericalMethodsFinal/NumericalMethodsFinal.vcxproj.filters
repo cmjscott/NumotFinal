@@ -21,24 +21,6 @@
     <ClInclude Include="Vehicle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataInput.h">
-      <Filter>excluded</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataOutput.h">
-      <Filter>excluded</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Process.h">
-      <Filter>excluded</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Structs.h">
-      <Filter>excluded</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\APE.h">
-      <Filter>excluded</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataBuffer.h">
-      <Filter>excluded</Filter>
-    </ClInclude>
     <ClInclude Include="utilityFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -59,35 +41,17 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataBuffer.cpp">
-      <Filter>excluded</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataInput.cpp">
-      <Filter>excluded</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\DataOutput.cpp">
-      <Filter>excluded</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Process.cpp">
-      <Filter>excluded</Filter>
-    </ClCompile>
     <ClCompile Include="utilityFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="matlabFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Numot\Homework_3\Homework_3\mainn.cpp">
-      <Filter>excluded</Filter>
-    </ClCompile>
     <ClCompile Include="generateVehicle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Examples\Geyser126_2\Geyser126_2.cpp">
-      <Filter>excluded</Filter>
-    </None>
     <None Include="..\..\README.md">
       <Filter>Resource Files</Filter>
     </None>

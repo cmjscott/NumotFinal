@@ -7,6 +7,11 @@
 #include <climits>
 
 
+typedef enum {
+	NUMERIC,
+	NON_NUMERIC
+} datatype_e;
+
 
 namespace util
 {
@@ -50,7 +55,7 @@ namespace util
 
 	//gets input from cin and will loop until the input is of the specified type, rejecting invalid inputs.
 	template <typename T>
-	T getSanitizedInput(double lBound = LONG_MIN, double uBound = LONG_MAX)
+	T getSanitizedInput(double lBound = LONG_MIN, double uBound = LONG_MAX, datatype_e returnType = NON_NUMERIC)
 	{
 		T terminalInput;
 		bool failedInput = true;
@@ -68,16 +73,17 @@ namespace util
 			// clear out any additional input from the stream until the end of the line
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-			// if the ignore cleared out more than one character (the null terminator)
-			// assume that bad data was passed to the input stream
-			// because otherwise the stream would be clear, since all the data was placed into inputInt
+			// if the ignore cleared out more than one character, assume that bad data was passed to the input stream
 			if (std::cin.gcount() > 1)
 			{
 				std::cout << "Error: invalid data entered." << std::endl << "Re-enter value as (" << typeid(T).name() << "): ";
 			}
 			else 
 			{
-				failedInput = false;
+				if (terminalInput < uBound && terminalInput > lBound)
+					failedInput = false;
+				else
+					std::cout << "Error: data entered outside of given bounds." << std::endl << "Re-enter a value between ( " << lBound << " , " << uBound " ): ";
 			}
 		} while (failedInput);
 
