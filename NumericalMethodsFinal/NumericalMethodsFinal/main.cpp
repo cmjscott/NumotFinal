@@ -265,11 +265,9 @@ void functionalityDemonstration()
 	test4Data = simulation4(SubaruSim4, dt);
 
 
-	//std::string s = "abc";
 
-
-	//std::cout << "Vector: " << v << std::endl;
-	//_getch();
+	std::cout << revMap << std::endl;
+	_getch();
 
 	//Output data for matlab
 	util::outputData(test1Data, "simulation_1_example_data");

@@ -21,4 +21,13 @@ namespace util
 		else
 			return false;
 	}
+
+	/*
+	for adding a << operator to vector for later
+
+	std::vector<std::string>& operator<<(std::vector<std::string>& op, std::string str) 
+	{
+		op.push_back(str);
+		return op;
+	}*/
 }
