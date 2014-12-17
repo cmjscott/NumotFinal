@@ -4,6 +4,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+
+
 const double msToMph(2.2368);
 
 int main()
@@ -13,7 +15,6 @@ int main()
 	std::string fileName;
 	double rho, dt, timeToFullThrottle;
 	int simulationFlag;
-	char yesNo;
 	Vehicle simulationVehicle;
 
 	//gearRatios.assign(ratioValues, ratioValues + sizeof(ratioValues) / sizeof(double));
@@ -38,14 +39,15 @@ int main()
 		dt = util::getSanitizedInput<double>();
 		std::cout << std::endl;
 
+		//creates a test vehicle based on simulation value entered
+		simulationVehicle = generateVehicle(simulationFlag);
+		
 		if (simulationFlag != 1)
 		{
 			std::cout << std::endl << "Enter air density rho (kg/m^3): ";
 			rho = util::getSanitizedInput<double>();
+			simulationVehicle.setRho(rho);
 		}
-
-		//creates a test vehicle based on simulation value entered
-		simulationVehicle = generateVehicle(simulationFlag);
 
 		//based on the simulation value entered, runs the corrisponding simulation
 		switch (simulationFlag)
@@ -54,16 +56,16 @@ int main()
 			testData = simulation1(simulationVehicle, dt);
 			break;
 		case 2:
-			testData = simulation1(simulationVehicle, dt, rho);
+			testData = simulation1(simulationVehicle, dt);
 			break;
 		case 3:
-			testData = simulation3(simulationVehicle, dt, rho);
+			testData = simulation3(simulationVehicle, dt);
 			break;
 		case 4:
 			std::cout << std::endl << "Enter time to full throttle: ";
 			timeToFullThrottle = util::getSanitizedInput<double>();
 			std::cout << std::endl;
-			testData = simulation4(simulationVehicle, dt, rho, timeToFullThrottle);
+			testData = simulation4(simulationVehicle, dt, timeToFullThrottle);
 			break;
 		}
 
@@ -85,7 +87,7 @@ int main()
 	return 0;
 }
 
-std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, double _rho)
+std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt)
 {
 	std::vector<std::vector<double> > data;
 	std::vector<double> time, vel;
@@ -99,7 +101,7 @@ std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, d
 
 	do
 	{
-		vel.push_back(testVehicle.velocity(vel.back(), _dt, &_rho));
+		vel.push_back(testVehicle.velocity(vel.back(), _dt));
 		time.push_back(time.back() + _dt);
 
 		if (vel.back() * msToMph >= 60 && zeroToSixtyTime == 0)
@@ -117,7 +119,7 @@ std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt, d
 	return data;
 }
 
-std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt, double _rho)
+std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt)
 {
 	std::vector<std::vector<double> > data;
 	std::vector<double> time, vel;
@@ -132,7 +134,7 @@ std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt, d
 
 	do
 	{
-		vel.push_back(testVehicle.velocity(vel.back(), _dt, &_rho));
+		vel.push_back(testVehicle.velocity(vel.back(), _dt));
 		time.push_back(time.back() + _dt);
 
 		if (vel.back() * msToMph >= 60 && zeroToSixtyTime == 0)
@@ -145,7 +147,7 @@ std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt, d
 	
 	do
 	{
-		vel.push_back(testVehicle.brake(vel.back(), _dt, &_rho));
+		vel.push_back(testVehicle.brake(vel.back(), _dt));
 		time.push_back(time.back() + _dt);
 	} while (vel.back() > 0);
 
@@ -163,11 +165,11 @@ std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt, d
 	return data;
 }
 
-std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, double _rho, double _timeToFullThrottle)
+std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, double _timeToFullThrottle)
 {
 	std::vector<std::vector<double> > data;
 	std::vector<double> time, vel, rpm, force, torque;
-	double maxSpeed, timeMaxSpeed, throttle(0), zeroToSixtyTime(0);
+	double throttle(0), zeroToSixtyTime(0);
 
 	const double timeToFullThrottle = _timeToFullThrottle;
 
@@ -183,26 +185,26 @@ std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, d
 	do
 	{
 		throttle = time.back()/timeToFullThrottle;
-		vel.push_back(testVehicle.velocity(vel.back(), _dt, &_rho, throttle));
+		vel.push_back(testVehicle.velocity(vel.back(), _dt, throttle));
 		time.push_back(time.back() + _dt);
 
 		if (vel.back() * msToMph >= 60 && zeroToSixtyTime == 0)
 			zeroToSixtyTime = time.back();
 
-		rpm.push_back(testVehicle.pubGetRPM());
+		rpm.push_back(testVehicle.getRPM());
 		force.push_back(testVehicle.engineDriveForce(throttle));
 		torque.push_back(testVehicle.getTorque(throttle));
 	} while (time.back() < timeToFullThrottle);
 
 	do
 	{
-		vel.push_back(testVehicle.velocity(vel.back(), _dt, &_rho, throttle));
+		vel.push_back(testVehicle.velocity(vel.back(), _dt, throttle));
 		time.push_back(time.back() + _dt);
 
 		if (vel.back() * msToMph >= 60 && zeroToSixtyTime == 0)
 			zeroToSixtyTime = time.back();
 
-		rpm.push_back(testVehicle.pubGetRPM());
+		rpm.push_back(testVehicle.getRPM());
 		force.push_back(testVehicle.engineDriveForce(throttle));
 		torque.push_back(testVehicle.getTorque(throttle));
 	} while ((vel.back() - vel.rbegin()[1]) / _dt > .1); // keep calculating velocity until the acceleration is less than .01 (essentially at max velocity)
@@ -243,7 +245,7 @@ void functionalityDemonstration()
 	RPM =    { 1200, 1600, 2000, 2400, 2800, 3200, 3600, 4000, 4400, 4800, 5200, 5600, 6000, 6400, 6800 };
 	torque = { 240 , 250 , 260 , 270 , 280 , 290 , 300 , 305 , 310 , 305 , 295 , 285 , 280 , 270 , 260  };
 	*/
-
+	std::vector<std::string> v;
 	std::vector<std::vector<double> > test1Data, test2Data, test3Data, test4Data;
 	std::vector<double> revMap = { 1200, 1600, 2000, 2400, 2800, 3200, 3600, 4000, 4400, 4800, 5200, 5600, 6000, 6400, 6800 };
 	std::vector<double> torqueMap = { 240, 250, 260, 270, 280, 290, 300, 305, 310, 305, 295, 285, 280, 270, 260 };
@@ -254,19 +256,26 @@ void functionalityDemonstration()
 	Vehicle SubaruSim1(mass, Cdrag, driveForce);
 	Vehicle SubaruSim2(mass, Cdrag, driveForce, frontArea);
 	Vehicle SubaruSim3(mass, Cdrag, driveForce, frontArea, brakingForce);
-	Vehicle SubaruSim4(mass, Cdrag, frontArea, gearRatios, diffRatio, wheelRadius, revMap, torqueMap);
+	Vehicle SubaruSim4(mass, Cdrag, frontArea, gearRatios, diffRatio, wheelRadius, revMap, torqueMap, rho);
 
 	//Run simulations
 	test1Data = simulation1(SubaruSim1, dt);
-	test2Data = simulation1(SubaruSim2, dt, rho);
-	test3Data = simulation3(SubaruSim3, dt, rho);
-	test4Data = simulation4(SubaruSim4, dt, rho);
+	test2Data = simulation1(SubaruSim2, dt);
+	test3Data = simulation3(SubaruSim3, dt);
+	test4Data = simulation4(SubaruSim4, dt);
+
+
+	//std::string s = "abc";
+
+
+	//std::cout << "Vector: " << v << std::endl;
+	//_getch();
 
 	//Output data for matlab
 	util::outputData(test1Data, "simulation_1_example_data");
-	util::outputData(test2Data, "simulation_2_example_data");
-	util::outputData(test3Data, "simulation_3_example_data");
-	util::outputData(test4Data, "simulation_4_example_data");
+	//util::outputData(test2Data, "simulation_2_example_data");
+	//util::outputData(test3Data, "simulation_3_example_data");
+	//util::outputData(test4Data, "simulation_4_example_data");
 
 }
 

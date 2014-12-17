@@ -56,7 +56,7 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalAre
 
 //constructor for sim 4
 Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<double> _gearRatios, double _diffRatio, double _wheelRadius,
-	std::vector<double> _revMap, std::vector<double> _torqueMap)
+	std::vector<double> _revMap, std::vector<double> _torqueMap, double _rho)
 {
 	mass = _mass;
 	Cdrag = _Cdrag;
@@ -67,6 +67,7 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<d
 	gearRatios = _gearRatios;
 	revMap = _revMap;
 	torqueMap = _torqueMap;
+	rho = _rho;
 	currGear = 1;
 	simulationFlag = 4;
 	peakTorqueIndex = findPeakTorque();
@@ -76,37 +77,43 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<d
 //Honestly not 100% sure what this does.
 Vehicle::~Vehicle() {}
  
+
+//Getters and Setters
+void Vehicle::setRho(double _rho) { rho = _rho; }
+
+
+
 //Returns the next velocity after dt time has passed, based on current velocity
-double Vehicle::velocity(double _currVelocity, double dt, double *rho, double throttle)
+double Vehicle::velocity(double _currVelocity, double dt, double throttle)
 {
 	double acceleration;
 	currVelocity = _currVelocity;
 	if (throttle == -1)
-		acceleration = accel(rho);
+		acceleration = accel();
 	else
-		acceleration = accel(rho, throttle);
+		acceleration = accel(throttle);
 
 	return currVelocity + dt * acceleration;
 }
 
-double Vehicle::brake(double _currVelocity, double dt, double *rho)
+double Vehicle::brake(double _currVelocity, double dt)
 {
 	double acceleration;
 	currVelocity = _currVelocity;
-	acceleration = deccel(rho);
+	acceleration = deccel();
 
 	return currVelocity + dt * acceleration;
 }
 
 //calculates the acceleartion based on the sum of the forces on the car and the mass
-double Vehicle::accel(double *rho, double throttle)
+double Vehicle::accel(double throttle)
 {
 	double fSum;
 	if (throttle == -1)
-		fSum = fDrive + fDrag(rho) + Frr();
+		fSum = fDrive + fDrag() + Frr();
 	else
 	{
-		fSum = engineDriveForce(throttle) + fDrag(rho) + Frr();
+		fSum = engineDriveForce(throttle) + fDrag() + Frr();
 		shift();
 	}
 		
@@ -114,36 +121,25 @@ double Vehicle::accel(double *rho, double throttle)
 }
 
 //calculates the force on the vehicle due to braking
-double Vehicle::deccel(double *rho)
+double Vehicle::deccel()
 {
 	double fSum;
-	fSum = -fBrake + fDrag(rho) + Frr();
+	fSum = -fBrake + fDrag() + Frr();
 	return fSum / mass;
 }
 
-//calculates the aerodynamic drag forces
-double Vehicle::fDrag(double *rho)
-{
-	return -0.5 * Cdrag * frontArea * (*rho) * std::pow(currVelocity, 2);
-}
+double Vehicle::fDrag() { return -0.5 * Cdrag * frontArea * rho * std::pow(currVelocity, 2); }//calculates the aerodynamic drag forces
 
-//calculates the rolling resistances
-double Vehicle::Frr()
-{
-	return -Crr * currVelocity;
-}
+double Vehicle::Frr(){ return -Crr * currVelocity;}//calculates the rolling resistances
 
 //calculates the drive force based on throttle and torque
-double Vehicle::engineDriveForce(double throttle)
-{
-	return getTorque(throttle) * throttle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius;;
-}
+double Vehicle::engineDriveForce(double throttle) { return getTorque(throttle) * throttle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius; }
 
 //figures out if the car should shift or not.
 void Vehicle::shift()
 {
 	double currentRPM, upshiftedRPM;
-	currentRPM = pubGetRPM();
+	currentRPM = getRPM();
 
 	//will do nothing if the current gear is equal to the number of gears in the gearbox
 	if (currGear >= gearRatios.size()) 
@@ -166,7 +162,7 @@ void Vehicle::shift()
 }
 
 //calculates the current rpm based on current velocity and gear ratio. 
-double Vehicle::pubGetRPM()
+double Vehicle::getRPM()
 {
 	double rpm;
 	rpm = currVelocity / wheelRadius *(60 / (2 * M_PI)) * gearRatios[currGear-1] * diffRatio;
@@ -181,18 +177,18 @@ double Vehicle::pubGetRPM()
 //calculates torque based on current rpm and throttle position
 double Vehicle::getTorque(double throttle)
 {
-	double currRPM, currTorque;
+	double currentRPM, currTorque;
 	int i = 0;
 
-	currRPM = pubGetRPM();	
+	currentRPM = getRPM();	
 
 	// does a linear search on the rpm vector in the torque to get the position of the current rpm on the torque curve
 	do
 		++i;
-	while (currRPM < revMap[i]);
+	while (currentRPM < revMap[i]);
 
 	//linear interpolation of current rpm on the torque curve
-	currTorque = torqueMap[i - 1] + (currRPM - revMap[i - 1])*(torqueMap[i] - torqueMap[i - 1]) / (revMap[i] - revMap[i - 1]);
+	currTorque = torqueMap[i - 1] + (currentRPM - revMap[i - 1]) * (torqueMap[i] - torqueMap[i - 1]) / (revMap[i] - revMap[i - 1]);
 
 	return currTorque;
 }
@@ -207,5 +203,11 @@ int Vehicle::findPeakTorque()
 	while (torqueMap[i] > torqueMap[i-1]);
 
 	return i - 1;
+}
+
+std::ostream& operator << (std::ostream& out, const Vehicle& obj)
+{
+
+	return out;
 }
 

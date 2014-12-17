@@ -50,7 +50,7 @@ namespace util
 
 	//gets input from cin and will loop until the input is of the specified type, rejecting invalid inputs.
 	template <typename T>
-	T getSanitizedInput(double lBound = LONG_MIN, double uBound = LONG_MAX)
+	T getSanitizedInput()
 	{
 		T terminalInput;
 		bool failedInput = true;
@@ -59,28 +59,50 @@ namespace util
 		{
 			std::cin >> terminalInput;
 
-			//checks if the stream encountered a fatal error (ie. a char was entered)
 			if (std::cin.fail())
-			{
-				std::cin.clear(); // clears the error
-			}
+				std::cin.clear();
 
-			// clear out any additional input from the stream until the end of the line
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');			// clear out any additional input from the stream until the end of the line
 
-			// if the ignore cleared out more than one character (the null terminator)
-			// assume that bad data was passed to the input stream
-			// because otherwise the stream would be clear, since all the data was placed into inputInt
-			if (std::cin.gcount() > 1)
-			{
+			if (std::cin.gcount() > 1)								// if the ignore cleared out more than one character, assume that bad data was passed to the input stream
 				std::cout << "Error: invalid data entered." << std::endl << "Re-enter value as (" << typeid(T).name() << "): ";
-			}
-			else 
-			{
+			else
 				failedInput = false;
+
+		} while (failedInput);
+
+		return terminalInput;
+	}
+
+
+	template <typename T>
+	T getSanitizedInput(double lBound, double uBound)
+	{
+		T terminalInput;
+		bool failedInput = true;
+
+		do
+		{
+			std::cin >> terminalInput;
+
+			
+			if (std::cin.fail())
+				std::cin.clear();
+			
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');	
+
+			if (std::cin.gcount() > 1)
+				std::cout << "Error: invalid data entered." << std::endl << "Re-enter value as (" << typeid(T).name() << "): ";
+			else
+			{
+				if (terminalInput <= uBound && terminalInput >= lBound)
+					failedInput = false;
+				else
+					std::cout << "Error: data entered outside of given bounds." << std::endl << "Re-enter a value between ( " << lBound << " , " << uBound << " ): ";
 			}
 		} while (failedInput);
 
 		return terminalInput;
 	}
+
 }

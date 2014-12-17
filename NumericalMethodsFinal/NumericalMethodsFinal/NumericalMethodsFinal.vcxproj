@@ -164,6 +164,8 @@
     <ClInclude Include="generateVehicle.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="matlabFunctions.h" />
+    <ClInclude Include="prettyprint.h" />
+    <ClInclude Include="Structs.h" />
     <ClInclude Include="utilityFunctions.h" />
     <ClInclude Include="Vehicle.h" />
   </ItemGroup>
