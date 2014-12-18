@@ -65,15 +65,11 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<d
 	diffRatio = _diffRatio;
 	wheelRadius = _wheelRadius;	
 	gearRatios = _gearRatios;
-	revMap = _revMap;
-	torqueMap = _torqueMap;
 	rho = _rho;
 	transEff = .7;
 	currGear = 1;
 	simulationFlag = 4;
-	peakTorqueIndex = findPeakTorque();
 }
-
 
 //Honestly not 100% sure what this does.
 Vehicle::~Vehicle() {}
@@ -81,6 +77,8 @@ Vehicle::~Vehicle() {}
 
 //Getters and Setters
 void Vehicle::setRho(double _rho) { rho = _rho; }
+void Vehicle::attachEngine(engine* _engine) { attachedEngine = _engine; }
+
 
 
 
@@ -148,11 +146,12 @@ void Vehicle::shift()
 	currentRPM = getRPM();
 
 	//calculates the rpm value at the current speed if the gear were increased to the next gear
+	//TODO: change the rpm function from using the current gear to taking a gear index as a parameter
 	upshiftedRPM = currVelocity / wheelRadius *(60 / (2 * M_PI)) * gearRatios[currGear] * diffRatio;
 
-	if ((currentRPM - upshiftedRPM) / 2 >= (revMap[peakTorqueIndex] - upshiftedRPM))
+	if ((currentRPM - upshiftedRPM) / 2 >= (attachedEngine->peakTorqueRpm - upshiftedRPM))
 	{
-		++currGear;
+		currGear++;
 
 		if (currGear == 2)
 			std::cout << "Shifted to 2nd gear at " << currentRPM << " rpm." << std::endl;
@@ -170,41 +169,10 @@ double Vehicle::getRPM()
 	rpm = currVelocity / wheelRadius *(60 / (2 * M_PI)) * gearRatios[currGear-1] * diffRatio;
 	if (rpm < 3000 && currGear == 1)
 		rpm = 3000;
-	if (rpm > revMap.back())
-		rpm = revMap.back();
+	if (rpm > attachedEngine->maxRpm)
+		rpm = attachedEngine->maxRpm;
 
 	return rpm;
-}
-
-//calculates torque based on current rpm and throttle position
-double Vehicle::getTorque(double throttle)
-{
-	double currentRPM, currTorque;
-	int i = 0;
-
-	currentRPM = getRPM();	
-
-	// does a linear search on the rpm vector in the torque to get the position of the current rpm on the torque curve
-	do
-		++i;
-	while (currentRPM < revMap[i]);
-
-	//linear interpolation of current rpm on the torque curve
-	currTorque = torqueMap[i - 1] + (currentRPM - revMap[i - 1]) * (torqueMap[i] - torqueMap[i - 1]) / (revMap[i] - revMap[i - 1]);
-
-	return currTorque;
-}
-
-//finds the rpm value where peak torque is generated on the torque curve
-int Vehicle::findPeakTorque()
-{
-	int i = 0;
-
-	do
-		++i;
-	while (torqueMap[i] > torqueMap[i-1]);
-
-	return i - 1;
 }
 
 std::ostream& operator << (std::ostream& out, const Vehicle& obj)

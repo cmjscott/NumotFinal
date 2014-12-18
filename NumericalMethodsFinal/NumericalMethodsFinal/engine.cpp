@@ -9,7 +9,8 @@ engine::engine(std::vector<double> _rpm, std::vector<double> _torque, double _ef
 	rpm = _rpm;
 	torque = _torque;
 	efficiencyFactor = _efficiencyFactor;
-	peakTorqueIndex = findPeakTorque();
+	maxRpm = rpm.back();
+	peakTorqueRpm = findPeakTorqueRpm();
 }
 
 
@@ -18,17 +19,17 @@ engine::~engine()
 }
 
 
-int engine::findPeakTorque()
+double engine::findPeakTorqueRpm()
 {
-	int i = 0;
+	int i = 1;
 
-	do
+	while (torque[i] > torque[i - 1])
 		i++;
-	while (torque[i] > torque[i - 1]);
 
-	return i - 1;
+	return rpm[i];
 }
 
+//finds the rpm value where peak torque is generated on the torque curve
 double engine::getTorque(const double* currentRpm)
 {
 	double currTorque;
@@ -43,3 +44,4 @@ double engine::getTorque(const double* currentRpm)
 	currTorque = torque[i - 1] + (*currentRpm - rpm[i - 1]) * (torque[i] - torque[i - 1]) / (rpm[i] - rpm[i - 1]);
 	return currTorque;
 }
+

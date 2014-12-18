@@ -10,6 +10,7 @@
 //#include "prettyprint.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "engine.h"
 
 class Vehicle
 {
@@ -30,6 +31,7 @@ public:
 	double getTorque(double throttle);
 	double getRPM();
 	void setRho(double _rho);
+	void attachEngine(engine* _engine);
 	~Vehicle();
 
 	//public friend functions
@@ -46,7 +48,9 @@ private:
 	void shift();				  //shifts if rpm range is ideal
 	double fDrag();    //returns the drag forces ascociated with air resistance
 	double Frr();                 //returns the resistance ascociated with rolling
-	int findPeakTorque();
+
+	//depreciated
+	//int findPeakTorque();
 	
 	
 
@@ -62,14 +66,17 @@ private:
 	double diffRatio;
 	double wheelRadius;
 	int currGear;
-	int peakTorqueIndex;
 	double transEff;
 
 	std::vector<double> gearRatios;
-	std::vector<double> revMap;
-	std::vector<double> torqueMap;
 	std::vector<std::vector<double> > stateData;
 
+	engine* attachedEngine;
+
+	//depreciated
+	//std::vector<double> revMap;
+	//std::vector<double> torqueMap;
+	//int peakTorqueIndex;
 };
 
 #endif

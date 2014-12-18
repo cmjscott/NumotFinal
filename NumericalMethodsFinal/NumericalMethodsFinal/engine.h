@@ -16,14 +16,16 @@ public:
 	//public member functions
 	double getTorque(const double* currentRpm);
 
-	//private member variables
+	//public member variables
+	double maxRpm;
+	double peakTorqueRpm;
+	
 
 private:
 	//private member functions
-	int findPeakTorque();
-
+	double findPeakTorqueRpm();
+	
 	//private member variables
-	int peakTorqueIndex;
 	double efficiencyFactor;
 	std::vector<double> rpm;
 	std::vector<double> torque;
