@@ -14,7 +14,7 @@ public:
 	~engine();
 
 	//public member functions
-	double getTorque(const double* currentRpm);
+	double getTorque(double currentRpm);
 
 	//public member variables
 	double maxRpm;

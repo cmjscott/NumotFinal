@@ -18,7 +18,7 @@ namespace util
 	{
 		std::ofstream outfile;
 		std::string filePath = getenv("USERPROFILE");
-		filePath += "\\Documents\\" + _fileName + ".dat";
+		filePath += "\\Documents\\" + _fileName + ".csv";
 
 		// open file in write mode, overwriting if file exists.
 		//Note: this could lead to loss of data and should be dealt with.

@@ -21,14 +21,13 @@ public:
 	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea);										//constructor for simulation 2
 	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea, double _fBrake);						//constructor for simulation 3
 	Vehicle(double _mass, double _Cdrag, double _frontalArea,std::vector<double> _gearRatio,						// constructor for simulation 4
-		double _diffRatios, double wheelRadius,std::vector<double> _revMap, std::vector<double> _torqueMap, double _rho = 1);
+		double _diffRatios, double wheelRadius, double _rho = 1);
 	
 
 	//public member functions
 	double velocity(double _currVelocity, double dt, double throttle = -1);
 	double brake(double _currVelocity, double dt);
 	double engineDriveForce(double throttle);
-	double getTorque(double throttle);
 	double getRPM();
 	void setRho(double _rho);
 	void attachEngine(engine* _engine);

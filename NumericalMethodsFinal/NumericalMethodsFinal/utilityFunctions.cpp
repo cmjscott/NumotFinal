@@ -3,14 +3,14 @@
 
 namespace util
 {
-	//simple yes/no 
+	//simple yes/no boolean with prompt and input
 	bool yesNo(std::string promptText)
 	{
 		char inputChar;
 		std::cout << std::endl << promptText << " (Y/N) : ";
 		inputChar = util::getSanitizedInput<char>();
 
-		while ((inputChar != 'Y' && inputChar != 'N') && (inputChar != 'y' && inputChar != 'n'))
+		while ((inputChar != 'Y' && inputChar != 'N' && inputChar != 'y' && inputChar != 'n'))
 		{
 			std::cout << "Try again. Enter 'Y' for yes, and 'N' for no.\nEnter 'Y' or 'N' : ";
 			inputChar = util::getSanitizedInput<char>();

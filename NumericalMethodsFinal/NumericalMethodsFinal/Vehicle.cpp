@@ -55,8 +55,8 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalAre
 }
 
 //constructor for sim 4
-Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<double> _gearRatios, double _diffRatio, double _wheelRadius,
-	std::vector<double> _revMap, std::vector<double> _torqueMap, double _rho)
+Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<double> _gearRatios,
+	double _diffRatio, double _wheelRadius, double _rho)
 {
 	mass = _mass;
 	Cdrag = _Cdrag;
@@ -132,7 +132,7 @@ double Vehicle::fDrag() { return -0.5 * Cdrag * frontArea * rho * std::pow(currV
 double Vehicle::Frr(){ return -Crr * currVelocity;}//calculates the rolling resistances
 
 //calculates the drive force based on throttle and torque
-double Vehicle::engineDriveForce(double throttle) { return getTorque(throttle) * throttle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius; }
+double Vehicle::engineDriveForce(double throttle) { return attachedEngine->getTorque(getRPM()) * throttle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius; }
 
 
 //figures out if the car should shift or not.

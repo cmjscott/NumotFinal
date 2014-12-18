@@ -177,7 +177,7 @@ Vehicle generateVehicle(int simulationFlag)
 	std::cout << std::endl << "Created vehicle for simulation " << simulationFlag <<". Press any key to continue" << std::endl << std::endl;
 	_getch();
 
-	return Vehicle(mass, Cdrag, frontArea, gearRatios, diffRatio, wheelRadius, revMap, torqueMap);
+	return Vehicle(mass, Cdrag, frontArea, gearRatios, diffRatio, wheelRadius);
 }
 
 
