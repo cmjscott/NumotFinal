@@ -6,7 +6,7 @@
 
 
 
-const double msToMph(2.2368);
+const double MS_TO_MPH(2.2368);
 
 int main()
 {
@@ -104,12 +104,12 @@ std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt)
 		vel.push_back(testVehicle.velocity(vel.back(), _dt));
 		time.push_back(time.back() + _dt);
 
-		if (vel.back() * msToMph >= 60 && zeroToSixtyTime == 0)
+		if (vel.back() * MS_TO_MPH >= 60 && zeroToSixtyTime == 0)
 			zeroToSixtyTime = time.back();
 
 	} while ((vel.back() - vel.rbegin()[1])/_dt > .0001); // keep calculating velocity until the acceleration is less than .0001 (essentially at max velocity)
 
-	std::cout << "Your maximum velocity was " << vel.back() << " m/s  (" << vel.back() * msToMph << " mph)\n";
+	std::cout << "Your maximum velocity was " << vel.back() << " m/s  (" << vel.back() * MS_TO_MPH << " mph)\n";
 	std::cout << "Time to reach maximum velocity: " << time.back() << "seconds." << std::endl;
 	std::cout << "0 - 60 time: " << zeroToSixtyTime << " seconds." << std::endl;
 	std::cout << "--------------------------------------------------------------------------------" << std::endl << std::endl;
@@ -137,7 +137,7 @@ std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt)
 		vel.push_back(testVehicle.velocity(vel.back(), _dt));
 		time.push_back(time.back() + _dt);
 
-		if (vel.back() * msToMph >= 60 && zeroToSixtyTime == 0)
+		if (vel.back() * MS_TO_MPH >= 60 && zeroToSixtyTime == 0)
 			zeroToSixtyTime = time.back();
 
 	} while ((vel.back() - vel.rbegin()[1]) / _dt > .0001); // keep calculating velocity until the acceleration is less than .0001 (essentially at max velocity)
@@ -188,7 +188,7 @@ std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, d
 		vel.push_back(testVehicle.velocity(vel.back(), _dt, throttle));
 		time.push_back(time.back() + _dt);
 
-		if (vel.back() * msToMph >= 60 && zeroToSixtyTime == 0)
+		if (vel.back() * MS_TO_MPH >= 60 && zeroToSixtyTime == 0)
 			zeroToSixtyTime = time.back();
 
 		rpm.push_back(testVehicle.getRPM());
@@ -201,7 +201,7 @@ std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, d
 		vel.push_back(testVehicle.velocity(vel.back(), _dt, throttle));
 		time.push_back(time.back() + _dt);
 
-		if (vel.back() * msToMph >= 60 && zeroToSixtyTime == 0)
+		if (vel.back() * MS_TO_MPH >= 60 && zeroToSixtyTime == 0)
 			zeroToSixtyTime = time.back();
 
 		rpm.push_back(testVehicle.getRPM());
@@ -209,7 +209,7 @@ std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, d
 		torque.push_back(testVehicle.getTorque(throttle));
 	} while ((vel.back() - vel.rbegin()[1]) / _dt > .1); // keep calculating velocity until the acceleration is less than .01 (essentially at max velocity)
 
-	std::cout << std::endl << "Your maximum velocity was " << vel.back() << " m/s  (" << vel.back() * msToMph << " mph)" << std::endl;
+	std::cout << std::endl << "Your maximum velocity was " << vel.back() << " m/s  (" << vel.back() * MS_TO_MPH << " mph)" << std::endl;
 	std::cout << "Time to reach maximum throttle position: " << timeToFullThrottle << " seconds." << std::endl;
 	std::cout << "Time to reach maximum velocity: " << time.back() << " seconds." << std::endl;
 	std::cout << "0 - 60 time: " << zeroToSixtyTime << " seconds." << std::endl;

@@ -164,7 +164,6 @@
     <ClInclude Include="generateVehicle.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="matlabFunctions.h" />
-    <ClInclude Include="prettyprint.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="utilityFunctions.h" />
     <ClInclude Include="Vehicle.h" />
@@ -208,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\README.md" />
+    <None Include="ClassDiagram.cd" />
     <None Include="E:\Downloads\APE v1.0 Library\APE v1.0 Library\Examples\Geyser126_2\Geyser126_2.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

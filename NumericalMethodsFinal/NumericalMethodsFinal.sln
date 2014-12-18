@@ -1,32 +1,67 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NumericalMethodsFinal", "NumericalMethodsFinal\NumericalMethodsFinal.vcxproj", "{D48D2F80-A778-483C-8C06-62CF7274B460}"
 EndProject
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "Formula_SAE", "Formula_SAE\Formula_SAE.modelproj", "{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
+		SchoolComputer|Any CPU = SchoolComputer|Any CPU
+		SchoolComputer|Mixed Platforms = SchoolComputer|Mixed Platforms
 		SchoolComputer|Win32 = SchoolComputer|Win32
 		SchoolComputer|x64 = SchoolComputer|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D48D2F80-A778-483C-8C06-62CF7274B460}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{D48D2F80-A778-483C-8C06-62CF7274B460}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{D48D2F80-A778-483C-8C06-62CF7274B460}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{D48D2F80-A778-483C-8C06-62CF7274B460}.Debug|Win32.ActiveCfg = Debug|Win32
 		{D48D2F80-A778-483C-8C06-62CF7274B460}.Debug|Win32.Build.0 = Debug|Win32
 		{D48D2F80-A778-483C-8C06-62CF7274B460}.Debug|x64.ActiveCfg = Debug|x64
 		{D48D2F80-A778-483C-8C06-62CF7274B460}.Debug|x64.Build.0 = Debug|x64
+		{D48D2F80-A778-483C-8C06-62CF7274B460}.Release|Any CPU.ActiveCfg = Release|Win32
+		{D48D2F80-A778-483C-8C06-62CF7274B460}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{D48D2F80-A778-483C-8C06-62CF7274B460}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{D48D2F80-A778-483C-8C06-62CF7274B460}.Release|Win32.ActiveCfg = Release|Win32
 		{D48D2F80-A778-483C-8C06-62CF7274B460}.Release|Win32.Build.0 = Release|Win32
 		{D48D2F80-A778-483C-8C06-62CF7274B460}.Release|x64.ActiveCfg = Release|Win32
 		{D48D2F80-A778-483C-8C06-62CF7274B460}.Release|x64.Build.0 = Release|Win32
+		{D48D2F80-A778-483C-8C06-62CF7274B460}.SchoolComputer|Any CPU.ActiveCfg = SchoolComputer|Win32
+		{D48D2F80-A778-483C-8C06-62CF7274B460}.SchoolComputer|Mixed Platforms.ActiveCfg = SchoolComputer|Win32
+		{D48D2F80-A778-483C-8C06-62CF7274B460}.SchoolComputer|Mixed Platforms.Build.0 = SchoolComputer|Win32
 		{D48D2F80-A778-483C-8C06-62CF7274B460}.SchoolComputer|Win32.ActiveCfg = SchoolComputer|Win32
 		{D48D2F80-A778-483C-8C06-62CF7274B460}.SchoolComputer|Win32.Build.0 = SchoolComputer|Win32
 		{D48D2F80-A778-483C-8C06-62CF7274B460}.SchoolComputer|x64.ActiveCfg = SchoolComputer|x64
 		{D48D2F80-A778-483C-8C06-62CF7274B460}.SchoolComputer|x64.Build.0 = SchoolComputer|x64
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.Release|Win32.ActiveCfg = Release|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.Release|x64.ActiveCfg = Release|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.SchoolComputer|Any CPU.ActiveCfg = Release|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.SchoolComputer|Any CPU.Build.0 = Release|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.SchoolComputer|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.SchoolComputer|Mixed Platforms.Build.0 = Release|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.SchoolComputer|Win32.ActiveCfg = Release|Any CPU
+		{FC8C278F-52A5-4D13-8CB5-662C63E2F4B6}.SchoolComputer|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -135,15 +135,16 @@ double Vehicle::Frr(){ return -Crr * currVelocity;}//calculates the rolling resi
 //calculates the drive force based on throttle and torque
 double Vehicle::engineDriveForce(double throttle) { return getTorque(throttle) * throttle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius; }
 
+
 //figures out if the car should shift or not.
 void Vehicle::shift()
-{
-	double currentRPM, upshiftedRPM;
-	currentRPM = getRPM();
-
+{	
 	//will do nothing if the current gear is equal to the number of gears in the gearbox
 	if (currGear >= gearRatios.size()) 
 		return;
+
+	double currentRPM, upshiftedRPM;
+	currentRPM = getRPM();
 
 	//calculates the rpm value at the current speed if the gear were increased to the next gear
 	upshiftedRPM = currVelocity / wheelRadius *(60 / (2 * M_PI)) * gearRatios[currGear] * diffRatio;
