@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _INC_VEHICLE
+#define _INC_VEHICLE
+
 #include <cmath>
 #include <iostream>
 #include <vector>
@@ -56,14 +59,17 @@ private:
 	double fDrive;
 	double fBrake;
 	double rho;
-
-	std::vector<double> gearRatios;
-	std::vector<double> revMap;
-	std::vector<double> torqueMap;
 	double diffRatio;
 	double wheelRadius;
 	int currGear;
 	int peakTorqueIndex;
-	static double transEff;
+	double transEff;
+
+	std::vector<double> gearRatios;
+	std::vector<double> revMap;
+	std::vector<double> torqueMap;
+	std::vector<std::vector<double> > stateData;
+
 };
 
+#endif

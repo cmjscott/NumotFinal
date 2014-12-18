@@ -16,7 +16,7 @@ Tires: 225/60R16 98H SL
 wheelRadius = 0.33782 m
 */
 
-double Vehicle::transEff = .7;
+
 
 Vehicle::Vehicle() {}
 
@@ -68,6 +68,7 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<d
 	revMap = _revMap;
 	torqueMap = _torqueMap;
 	rho = _rho;
+	transEff = .7;
 	currGear = 1;
 	simulationFlag = 4;
 	peakTorqueIndex = findPeakTorque();
@@ -208,7 +209,18 @@ int Vehicle::findPeakTorque()
 
 std::ostream& operator << (std::ostream& out, const Vehicle& obj)
 {
-
+	/*
+	mass
+	Cdrag
+	frontArea
+	Crr
+	diffRatio = _diffR
+	wheelRadius = _wheelRadius;
+	gearRatios = _gearRatios;
+	revMap = _revMap;
+	torqueMap = _torqueMap;
+	rho = _rho;
+	*/
 	return out;
 }
 
