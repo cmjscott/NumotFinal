@@ -77,6 +77,7 @@ void Vehicle::attachEngine(engine* _engine) { attachedEngine = _engine; }
 
 std::vector<double> Vehicle::simulateNextTimestep(double _currVelocity, double _dt, double _throttle)
 {
+	stateData.clear();
 	currVelocity = _currVelocity;
 	dt = _dt;
 	currentThrottle = _throttle;

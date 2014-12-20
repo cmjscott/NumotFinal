@@ -51,24 +51,7 @@ int main()
 		}
 
 		//based on the simulation value entered, runs the corrisponding simulation
-		switch (simulationFlag)
-		{
-		case 1:
-			testData = simulation1(simulationVehicle, dt);
-			break;
-		case 2:
-			testData = simulation1(simulationVehicle, dt);
-			break;
-		case 3:
-			testData = simulation3(simulationVehicle, dt);
-			break;
-		case 4:
-			std::cout << std::endl << "Enter time to full throttle: ";
-			timeToFullThrottle = util::getSanitizedInput<double>();
-			std::cout << std::endl;
-			testData = simulation4(simulationVehicle, dt, timeToFullThrottle);
-			break;
-		}
+		
 
 		//promps user if they want to save the simulation data
 		if (util::yesNo("Write results to file?"))
@@ -110,6 +93,7 @@ std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, d
 
 	do
 	{
+		dataHolder.clear();
 		throttle = time.back()/timeToFullThrottle;
 		dataHolder = testVehicle.simulateNextTimestep(vel.back(), _dt, throttle);
 		
@@ -126,6 +110,7 @@ std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, d
 
 	do
 	{ 
+		dataHolder.clear();
 		dataHolder = testVehicle.simulateNextTimestep(vel.back(), _dt, throttle);
 
 		time.push_back(time.back() + _dt);
@@ -180,7 +165,7 @@ void functionalityDemonstration()
 	std::vector<double> revMap = { 1200, 1600, 2000, 2400, 2800, 3200, 3600, 4000, 4400, 4800, 5200, 5600, 6000, 6400, 6800 };
 	std::vector<double> torqueMap = { 240, 250, 260, 270, 280, 290, 300, 305, 310, 305, 295, 285, 280, 270, 260 };
 	std::vector<double> gearRatios = { 2.785, 1.545, 1, .697 };
-	double rho(1.2041), dt(.001), mass(1685.1), Cdrag(.32), driveForce(1700), frontArea(2.1739), brakingForce(7700), diffRatio(4.11), wheelRadius(.33782);
+	double rho(1.2041), dt(.01), mass(1685.1), Cdrag(.32), driveForce(1700), frontArea(2.1739), brakingForce(7700), diffRatio(4.11), wheelRadius(.33782);
 
 	//create vehicle objects for each simulation
 	Vehicle testVehicle(mass, Cdrag, frontArea, gearRatios, diffRatio, wheelRadius, rho);
