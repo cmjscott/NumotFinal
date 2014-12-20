@@ -168,11 +168,12 @@ void functionalityDemonstration()
 	double rho(1.2041), dt(.01), mass(1685.1), Cdrag(.32), driveForce(1700), frontArea(2.1739), brakingForce(7700), diffRatio(4.11), wheelRadius(.33782);
 
 	//create vehicle objects for each simulation
-	Vehicle testVehicle(mass, Cdrag, frontArea, gearRatios, diffRatio, wheelRadius, rho);
+	Vehicle testVehicle(mass, Cdrag, frontArea, diffRatio, wheelRadius, rho);
 	engine testEngine = engine(revMap, torqueMap);
-
+	Transmission testTransmission = Transmission(gearRatios);
 
 	testVehicle.attachEngine(&testEngine);
+	testVehicle.attachTransmission(&testTransmission);
 
 	//Run simulations
 	test4Data = simulation4(testVehicle, dt);

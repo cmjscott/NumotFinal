@@ -12,6 +12,8 @@ Transmission::Transmission(std::vector<double> _gearRatios)
 	shiftTime = 0;
 	shifting = false;
 	currentGearIndex = 0;
+	minGear = true;
+	maxGear = false;
 }
 
 Transmission::Transmission(std::vector<double> _gearRatios, std::vector<double> _gearEtas)
@@ -23,6 +25,8 @@ Transmission::Transmission(std::vector<double> _gearRatios, std::vector<double> 
 	shiftTime = 0;
 	shifting = false;
 	currentGearIndex = 0;
+	minGear = true;
+	maxGear = false;
 }
 
 Transmission::~Transmission(){}
@@ -32,12 +36,38 @@ void Transmission::upshift()
 {
 	if (currentGearIndex + 1 < gearRatios.size())
 		currentGearIndex++;
+
+	if (currentGearIndex + 1 == gearRatios.size())
+		maxGear = true;
+	else
+		maxGear = false;
 }
 
 void Transmission::downshift()
 {
 	if (currentGearIndex > 0)
 		currentGearIndex--;
+
+	if (currentGearIndex == 0)
+		minGear = true;
+	else
+		minGear = false;
 }
 
 double Transmission::getRatio() { return gearRatios[currentGearIndex]; }
+
+double Transmission::getNextRatio()
+{
+	if (maxGear)
+		return gearRatios[currentGearIndex];
+	else 
+		return gearRatios[currentGearIndex + 1];
+}
+
+double Transmission::getPreviousRatio()
+{
+	if (minGear)
+		return gearRatios[currentGearIndex];
+	else
+		return gearRatios[currentGearIndex - 1];
+}

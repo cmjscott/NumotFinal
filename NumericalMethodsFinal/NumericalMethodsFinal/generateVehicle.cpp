@@ -29,34 +29,16 @@ Vehicle generateVehicle(int simulationFlag)
 	}
 
 	//Vehicle creation is complete if simulation 1 was selected. Returns vehicle.
-	if (simulationFlag == 1)
-	{
-		std::cout << std::endl << "Created vehicle for simulation " << simulationFlag << ". Press any key to continue" << std::endl << std::endl;
-		_getch();
-		return Vehicle(mass, Cdrag, driveForce);
-	}
+	
 		
 	std::cout << std::endl << "Enter front area (m^2): ";
 	frontArea = util::getSanitizedInput<double>();
 
 	//Vehicle creation is complete if simulation 2 was selected. Returns vehicle.
-	if (simulationFlag == 2)
-	{
-		std::cout << std::endl << "Created vehicle for simulation " << simulationFlag << ". Press any key to continue" << std::endl << std::endl;
-		_getch();
-		return Vehicle(mass, Cdrag, driveForce, frontArea);
-	}
+	
 	
 	//Vehicle creation is complete if simulation 3 was selected once a braking force is input. Returns vehicle.
-	if (simulationFlag == 3)
-	{
-		std::cout << std::endl << "Enter braking force (N): ";
-		brakingForce = util::getSanitizedInput<double>();
-
-		std::cout << std::endl << "Created vehicle for simulation " << simulationFlag << ". Press any key to continue" << std::endl << std::endl;
-		_getch();
-		return Vehicle(mass, Cdrag, driveForce,frontArea,brakingForce);
-	}
+	
 
 
 	std::cout << std::endl << "Enter wheel radius (m): ";
@@ -177,7 +159,7 @@ Vehicle generateVehicle(int simulationFlag)
 	std::cout << std::endl << "Created vehicle for simulation " << simulationFlag <<". Press any key to continue" << std::endl << std::endl;
 	_getch();
 
-	return Vehicle(mass, Cdrag, frontArea, gearRatios, diffRatio, wheelRadius);
+	return Vehicle(mass, Cdrag, frontArea, diffRatio, wheelRadius);
 }
 
 

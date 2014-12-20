@@ -18,42 +18,8 @@ wheelRadius = 0.33782 m
 
 Vehicle::Vehicle() {}
 
-//constructor for sim 1
-Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive)
-{
-	mass = _mass;
-	Cdrag = _Cdrag;
-	fDrive = _fDrive;
-	Crr = 30 * Cdrag;
-	frontArea = 2; // Used for simulation 1 where the .5 coefficient must be neutralized.
-	simulationFlag = 1;
-}
-
-//constructor for sim 2
-Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea)
-{
-	mass = _mass;
-	Cdrag = _Cdrag;
-	fDrive = _fDrive;
-	frontArea = _frontalArea;
-	Crr = 30 * Cdrag;
-	simulationFlag = 2;
-}
-
-//constructor for sim 3
-Vehicle::Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea, double _fBrake)
-{
-	mass = _mass;
-	Cdrag = _Cdrag;
-	fDrive = _fDrive;
-	frontArea = _frontalArea;
-	fBrake = _fBrake;
-	Crr = 30 * Cdrag;
-	simulationFlag = 3;
-}
-
 //constructor for sim 4
-Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<double> _gearRatios,
+Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea,
 	double _diffRatio, double _wheelRadius, double _rho)
 {
 	mass = _mass;
@@ -62,10 +28,8 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<d
 	Crr = 30 * Cdrag;
 	diffRatio = _diffRatio;
 	wheelRadius = _wheelRadius;	
-	gearRatios = _gearRatios;
 	rho = _rho;
 	transEff = .7;
-	currGear = 1;
 	simulationFlag = 4;
 }
 
@@ -74,6 +38,7 @@ Vehicle::~Vehicle() {}
 //Getters and Setters
 void Vehicle::setRho(double _rho) { rho = _rho; }
 void Vehicle::attachEngine(engine* _engine) { attachedEngine = _engine; }
+void Vehicle::attachTransmission(Transmission* _transmission) { attachedTransmission = _transmission; }
 
 std::vector<double> Vehicle::simulateNextTimestep(double _currVelocity, double _dt, double _throttle)
 {
@@ -137,15 +102,14 @@ double Vehicle::Frr(){ return -Crr * currVelocity;}//calculates the rolling resi
 double Vehicle::engineDriveForce() 
 {
 	torqueHolder = attachedEngine->getTorque(getRPM());
-	return torqueHolder * currentThrottle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius;
+	return torqueHolder * currentThrottle * attachedTransmission->getRatio() * diffRatio * transEff / wheelRadius;
 }
 
 //figures out if the car should shift or not.
 //TODO: move shifting functionality to the gearbox instead of the car? not sure how I want to handle shifting yet
 void Vehicle::shift()
 {	
-	//will do nothing if the current gear is equal to the number of gears in the gearbox
-	if (currGear >= gearRatios.size()) 
+	if (attachedTransmission->maxGear)
 		return;
 
 	double currentRPM, upshiftedRPM;
@@ -153,27 +117,18 @@ void Vehicle::shift()
 
 	//calculates the rpm value at the current speed if the gear were increased to the next gear
 	//TODO: change the rpm function from using the current gear to taking a gear index as a parameter
-	upshiftedRPM = currVelocity / wheelRadius *(60 / (2 * M_PI)) * gearRatios[currGear] * diffRatio;
+	upshiftedRPM = currVelocity / wheelRadius * (60 / (2 * M_PI)) * attachedTransmission->getNextRatio() * diffRatio;
 
 	if ((currentRPM - upshiftedRPM) / 2 >= (attachedEngine->peakTorqueRpm - upshiftedRPM))
-	{
-		currGear++;
-
-		if (currGear == 2)
-			std::cout << "Shifted to 2nd gear at " << currentRPM << " rpm." << std::endl;
-		else if (currGear == 3)
-			std::cout << "Shifted to 3rd gear at " << currentRPM << " rpm." << std::endl;
-		else 
-			std::cout << "Shifted to " << currGear << "th gear at " << currentRPM << " rpm." << std::endl;
-	}
+		attachedTransmission->upshift();
 }
 
 //calculates the current rpm based on current velocity and gear ratio. 
 double Vehicle::getRPM()
 {
 	//TODO: change the minimum rpm to a settable attribute either in the engine or the car itself.
-	rpmHolder = currVelocity / wheelRadius *(60 / (2 * M_PI)) * gearRatios[currGear-1] * diffRatio;
-	if (rpmHolder < 3000 && currGear == 1)
+	rpmHolder = currVelocity / wheelRadius *(60 / (2 * M_PI)) * attachedTransmission->getRatio() * diffRatio;
+	if (rpmHolder < 3000 && attachedTransmission->minGear)
 		rpmHolder = 3000;
 	if (rpmHolder > attachedEngine->maxRpm)
 		rpmHolder = attachedEngine->maxRpm;

@@ -19,6 +19,10 @@ public:
 	void upshift();
 	void downshift();
 	double getRatio();
+	double getNextRatio();
+	double getPreviousRatio();
+	bool maxGear;
+	bool minGear;
 
 	//public member variables
 
@@ -29,10 +33,12 @@ private:
 	//private member variables
 	double shiftTime;
 	bool shifting;
+	
 	int currentGearIndex;
 	std::vector<double> gearRatios;
 	std::vector<double> gearEtas;
-	
+	std::vector<int> shiftLog;
+	std::vector<double> rpmLog;
 };
 
 #endif

@@ -11,16 +11,14 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "engine.h"
+#include "Transmission.h"
 
 class Vehicle
 {
 public:
 	// Constructors
 	Vehicle();
-	Vehicle(double _mass, double _Cdrag, double _fDrive);															//constructor for simulation 1
-	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea);										//constructor for simulation 2
-	Vehicle(double _mass, double _Cdrag, double _fDrive, double _frontalArea, double _fBrake);						//constructor for simulation 3
-	Vehicle(double _mass, double _Cdrag, double _frontalArea,std::vector<double> _gearRatio,						// constructor for simulation 4
+	Vehicle(double _mass, double _Cdrag, double _frontalArea,													//constructor for simulation 4
 		double _diffRatios, double wheelRadius, double _rho = 1);
 	
 
@@ -28,6 +26,7 @@ public:
 	std::vector<double> simulateNextTimestep(double _currVelocity, double _dt, double _throttle = -1);
 	void setRho(double _rho);
 	void attachEngine(engine* _engine);
+	void attachTransmission(Transmission* _transmission);
 	~Vehicle();
 
 	//public friend functions
@@ -65,7 +64,6 @@ private:
 	double wheelRadius;
 	double currentThrottle;
 	double dt;
-	int currGear;
 	double transEff;
 	double currVelocity;
 
@@ -74,10 +72,10 @@ private:
 	double torqueHolder;
 	double rpmHolder;
 
-	std::vector<double> gearRatios;
 	std::vector<double> stateData;
 
 	engine* attachedEngine;
+	Transmission* attachedTransmission;
 
 	//depreciated
 	//std::vector<double> revMap;
