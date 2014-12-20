@@ -16,8 +16,6 @@ Tires: 225/60R16 98H SL
 wheelRadius = 0.33782 m
 */
 
-
-
 Vehicle::Vehicle() {}
 
 //constructor for sim 1
@@ -71,51 +69,54 @@ Vehicle::Vehicle(double _mass, double _Cdrag, double _frontalArea, std::vector<d
 	simulationFlag = 4;
 }
 
-//Honestly not 100% sure what this does.
 Vehicle::~Vehicle() {}
  
-
 //Getters and Setters
 void Vehicle::setRho(double _rho) { rho = _rho; }
 void Vehicle::attachEngine(engine* _engine) { attachedEngine = _engine; }
 
-
-
-
-//Returns the next velocity after dt time has passed, based on current velocity
-double Vehicle::velocity(double _currVelocity, double dt, double throttle)
+std::vector<double> Vehicle::simulateNextTimestep(double _currVelocity, double _dt, double _throttle)
 {
-	double acceleration;
 	currVelocity = _currVelocity;
-	if (throttle == -1)
-		acceleration = accel();
-	else
-		acceleration = accel(throttle);
+	dt = _dt;
+	currentThrottle = _throttle;
+	velocityHolder = accelerationHolder = torqueHolder = rpmHolder = 0;
 
-	return currVelocity + dt * acceleration;
+	velocityHolder = velocity();
+
+	//TODO: add error checking to this in case one of the variables doesn't get set properly and remains zero.
+	stateData.push_back(velocityHolder);
+	stateData.push_back(accelerationHolder);
+	stateData.push_back(torqueHolder);
+	stateData.push_back(rpmHolder);
+
+	return stateData;
 }
 
-double Vehicle::brake(double _currVelocity, double dt)
+//Returns the next velocity after dt time has passed, based on current velocity
+double Vehicle::velocity()
 {
-	double acceleration;
-	currVelocity = _currVelocity;
-	acceleration = deccel();
+	accelerationHolder = accel();
+	return currVelocity + dt * accelerationHolder;
+}
 
-	return currVelocity + dt * acceleration;
+double Vehicle::brake()
+{
+	accelerationHolder = deccel();
+	return currVelocity + dt * accelerationHolder;
 }
 
 //calculates the acceleartion based on the sum of the forces on the car and the mass
-double Vehicle::accel(double throttle)
+double Vehicle::accel()
 {
 	double fSum;
-	if (throttle == -1)
+	if (currentThrottle == -1)
 		fSum = fDrive + fDrag() + Frr();
 	else
 	{
-		fSum = engineDriveForce(throttle) + fDrag() + Frr();
+		fSum = engineDriveForce() + fDrag() + Frr();
 		shift();
 	}
-		
 	return fSum / mass;
 }
 
@@ -132,10 +133,14 @@ double Vehicle::fDrag() { return -0.5 * Cdrag * frontArea * rho * std::pow(currV
 double Vehicle::Frr(){ return -Crr * currVelocity;}//calculates the rolling resistances
 
 //calculates the drive force based on throttle and torque
-double Vehicle::engineDriveForce(double throttle) { return attachedEngine->getTorque(getRPM()) * throttle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius; }
-
+double Vehicle::engineDriveForce() 
+{
+	torqueHolder = attachedEngine->getTorque(getRPM());
+	return torqueHolder * currentThrottle * gearRatios[currGear-1] * diffRatio * transEff / wheelRadius;
+}
 
 //figures out if the car should shift or not.
+//TODO: move shifting functionality to the gearbox instead of the car? not sure how I want to handle shifting yet
 void Vehicle::shift()
 {	
 	//will do nothing if the current gear is equal to the number of gears in the gearbox
@@ -165,13 +170,15 @@ void Vehicle::shift()
 //calculates the current rpm based on current velocity and gear ratio. 
 double Vehicle::getRPM()
 {
-	double rpm;
-	rpm = currVelocity / wheelRadius *(60 / (2 * M_PI)) * gearRatios[currGear-1] * diffRatio;
-	if (rpm < 3000 && currGear == 1)
-		rpm = 3000;
-	if (rpm > attachedEngine->maxRpm)
-		rpm = attachedEngine->maxRpm;
+	//TODO: change the minimum rpm to a settable attribute either in the engine or the car itself.
+	rpmHolder = currVelocity / wheelRadius *(60 / (2 * M_PI)) * gearRatios[currGear-1] * diffRatio;
+	if (rpmHolder < 3000 && currGear == 1)
+		rpmHolder = 3000;
+	if (rpmHolder > attachedEngine->maxRpm)
+		rpmHolder = attachedEngine->maxRpm;
 
+	//added this because I wasn't sure if it was alright to return a class variable or not.
+	double rpm = rpmHolder;
 	return rpm;
 }
 

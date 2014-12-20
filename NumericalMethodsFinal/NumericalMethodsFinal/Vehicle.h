@@ -25,10 +25,7 @@ public:
 	
 
 	//public member functions
-	double velocity(double _currVelocity, double dt, double throttle = -1);
-	double brake(double _currVelocity, double dt);
-	double engineDriveForce(double throttle);
-	double getRPM();
+	std::vector<double> simulateNextTimestep(double _currVelocity, double _dt, double _throttle = -1);
 	void setRho(double _rho);
 	void attachEngine(engine* _engine);
 	~Vehicle();
@@ -42,33 +39,43 @@ public:
 private:
 
 	//Member private functions
-	double accel(double throttle = -1);
+	double accel();
 	double deccel();
 	void shift();				  //shifts if rpm range is ideal
 	double fDrag();    //returns the drag forces ascociated with air resistance
 	double Frr();                 //returns the resistance ascociated with rolling
+	double velocity();
+	double brake();
+	double engineDriveForce();
+	double getRPM();
 
 	//depreciated
 	//int findPeakTorque();
-	
 	
 
 	//Member private properties
 	double mass;
 	double Cdrag;
 	double Crr;
-	double currVelocity;
 	double frontArea;
 	double fDrive;
 	double fBrake;
 	double rho;
 	double diffRatio;
 	double wheelRadius;
+	double currentThrottle;
+	double dt;
 	int currGear;
 	double transEff;
+	double currVelocity;
+
+	double velocityHolder;
+	double accelerationHolder;
+	double torqueHolder;
+	double rpmHolder;
 
 	std::vector<double> gearRatios;
-	std::vector<std::vector<double> > stateData;
+	std::vector<double> stateData;
 
 	engine* attachedEngine;
 

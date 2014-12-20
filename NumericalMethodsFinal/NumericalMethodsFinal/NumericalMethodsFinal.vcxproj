@@ -166,6 +166,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="matlabFunctions.h" />
     <ClInclude Include="Structs.h" />
+    <ClInclude Include="Transmission.h" />
     <ClInclude Include="utilityFunctions.h" />
     <ClInclude Include="Vehicle.h" />
   </ItemGroup>
@@ -204,6 +205,7 @@
     <ClCompile Include="generateVehicle.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matlabFunctions.cpp" />
+    <ClCompile Include="Transmission.cpp" />
     <ClCompile Include="utilityFunctions.cpp" />
     <ClCompile Include="Vehicle.cpp" />
   </ItemGroup>
