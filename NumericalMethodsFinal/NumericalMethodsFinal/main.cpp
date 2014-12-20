@@ -169,20 +169,16 @@ void functionalityDemonstration()
 
 	//create vehicle objects for each simulation
 	Vehicle testVehicle(mass, Cdrag, frontArea, gearRatios, diffRatio, wheelRadius, rho);
-	engine* testEngine = new engine(revMap, torqueMap);
+	engine testEngine = engine(revMap, torqueMap);
 
-	testVehicle.attachEngine(testEngine);
+
+	testVehicle.attachEngine(&testEngine);
 
 	//Run simulations
 	test4Data = simulation4(testVehicle, dt);
 	
-
-
 	//Output data for matlab
 	util::outputData(test4Data, "test_data");
-	//util::outputData(test2Data, "simulation_2_example_data");
-	//util::outputData(test3Data, "simulation_3_example_data");
-	//util::outputData(test4Data, "simulation_4_example_data");
 
 }
 

@@ -17,15 +17,19 @@ public:
 
 	//public member functions
 	void upshift();
-	void dounshift();
+	void downshift();
+	double getRatio();
 
 	//public member variables
 
 private:
 
+	//private member functions
+
 	//private member variables
-	double currentGear;
 	double shiftTime;
+	bool shifting;
+	int currentGearIndex;
 	std::vector<double> gearRatios;
 	std::vector<double> gearEtas;
 	

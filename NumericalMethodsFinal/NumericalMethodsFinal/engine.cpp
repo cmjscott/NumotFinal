@@ -14,9 +14,7 @@ engine::engine(std::vector<double> _rpm, std::vector<double> _torque, double _ef
 }
 
 
-engine::~engine()
-{
-}
+engine::~engine() {}
 
 
 double engine::findPeakTorqueRpm()
