@@ -120,7 +120,10 @@ void Vehicle::shift()
 	upshiftedRPM = currVelocity / wheelRadius * (60 / (2 * M_PI)) * attachedTransmission->getNextRatio() * diffRatio;
 
 	if ((currentRPM - upshiftedRPM) / 2 >= (attachedEngine->peakTorqueRpm - upshiftedRPM))
+	{
 		attachedTransmission->upshift();
+		std::cout << "shifted at " << currentRPM << " RPM." << std::endl;
+	}
 }
 
 //calculates the current rpm based on current velocity and gear ratio. 

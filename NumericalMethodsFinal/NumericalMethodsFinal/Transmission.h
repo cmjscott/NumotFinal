@@ -4,6 +4,7 @@
 #define _INC_TRANSMISSION
 
 #include <vector>
+#include <iostream>
 
 class Transmission
 {

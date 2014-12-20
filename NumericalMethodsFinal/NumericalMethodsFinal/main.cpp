@@ -165,7 +165,7 @@ void functionalityDemonstration()
 	std::vector<double> revMap = { 1200, 1600, 2000, 2400, 2800, 3200, 3600, 4000, 4400, 4800, 5200, 5600, 6000, 6400, 6800 };
 	std::vector<double> torqueMap = { 240, 250, 260, 270, 280, 290, 300, 305, 310, 305, 295, 285, 280, 270, 260 };
 	std::vector<double> gearRatios = { 2.785, 1.545, 1, .697 };
-	double rho(1.2041), dt(.01), mass(1685.1), Cdrag(.32), driveForce(1700), frontArea(2.1739), brakingForce(7700), diffRatio(4.11), wheelRadius(.33782);
+	double rho(1.2041), dt(.001), mass(1685.1), Cdrag(.32), driveForce(1700), frontArea(2.1739), brakingForce(7700), diffRatio(4.11), wheelRadius(.33782);
 
 	//create vehicle objects for each simulation
 	Vehicle testVehicle(mass, Cdrag, frontArea, diffRatio, wheelRadius, rho);
