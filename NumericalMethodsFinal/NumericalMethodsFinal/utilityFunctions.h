@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _INC_UTILITYFUNCTIONS
+#define _INC_UTILITYFUNCTIONS
+
 #include <string>
 #include <vector>
 #include <fstream>
@@ -106,3 +109,5 @@ namespace util
 	}
 
 }
+
+#endif

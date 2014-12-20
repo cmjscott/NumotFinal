@@ -131,6 +131,7 @@ double Vehicle::getRPM()
 {
 	//TODO: change the minimum rpm to a settable attribute either in the engine or the car itself.
 	rpmHolder = currVelocity / wheelRadius *(60 / (2 * M_PI)) * attachedTransmission->getRatio() * diffRatio;
+
 	if (rpmHolder < 3000 && attachedTransmission->minGear)
 		rpmHolder = 3000;
 	if (rpmHolder > attachedEngine->maxRpm)

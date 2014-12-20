@@ -167,7 +167,7 @@ void functionalityDemonstration()
 	std::vector<double> gearRatios = { 2.785, 1.545, 1, .697 };
 	double rho(1.2041), dt(.001), mass(1685.1), Cdrag(.32), driveForce(1700), frontArea(2.1739), brakingForce(7700), diffRatio(4.11), wheelRadius(.33782);
 
-	//create vehicle objects for each simulation
+	//create test objects
 	Vehicle testVehicle(mass, Cdrag, frontArea, diffRatio, wheelRadius, rho);
 	engine testEngine = engine(revMap, torqueMap);
 	Transmission testTransmission = Transmission(gearRatios);
