@@ -169,7 +169,7 @@ void functionalityDemonstration()
 
 	//create test objects
 	Vehicle testVehicle(mass, Cdrag, frontArea, diffRatio, wheelRadius, rho);
-	engine testEngine = engine(revMap, torqueMap);
+	engine testEngine = engine(revMap, torqueMap, "test_engine");
 	Transmission testTransmission = generateTransmission();
 
 	testVehicle.attachEngine(&testEngine);
@@ -184,6 +184,13 @@ void functionalityDemonstration()
 	//Output data for matlab
 	util::outputData(test4Data, "test_data");
 }
+
+void init()
+{
+	// make sure all directories are created and ready here
+
+}
+
 
 //Depreciated
 /*

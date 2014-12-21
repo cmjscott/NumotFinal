@@ -5,13 +5,14 @@
 
 #include <vector>
 #include <iostream>
+#include <string>
 
 class engine
 {
 public:
 	//constructors
 	engine();
-	engine(std::vector<double> _rpm, std::vector<double> _torque, double _efficiencyFactor = 1);
+	engine(std::vector<double> _rpm, std::vector<double> _torque, std::string _name, double _efficiencyFactor = 1);
 	~engine();
 
 	//public member functions
@@ -21,6 +22,7 @@ public:
 	//public member variables
 	double maxRpm;
 	double peakTorqueRpm;
+	std::string name;
 	
 
 private:

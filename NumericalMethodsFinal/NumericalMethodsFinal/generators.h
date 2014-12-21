@@ -1,5 +1,7 @@
 #pragma once
 
+#ifndef _INC_GENERATORS
+#define _INC_GENERATORS
 
 #include <vector>
 #include <iostream>
@@ -16,3 +18,4 @@ Transmission generateTransmission();
 
 
 
+#endif

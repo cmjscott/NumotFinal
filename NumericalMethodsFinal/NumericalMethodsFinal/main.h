@@ -20,5 +20,6 @@ std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt);
 std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt);
 std::vector<std::vector<double> > simulation4(Vehicle testVehicle, double _dt, double _timeToFullThrottle = .2);
 void functionalityDemonstration();
+void init();
 
 #endif

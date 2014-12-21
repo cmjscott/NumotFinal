@@ -163,8 +163,10 @@
     </ClInclude>
     <ClInclude Include="engine.h" />
     <ClInclude Include="generators.h" />
+    <ClInclude Include="loaders.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="matlabFunctions.h" />
+    <ClInclude Include="savers.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="Transmission.h" />
     <ClInclude Include="utilityFunctions.h" />
@@ -203,8 +205,10 @@
     </ClCompile>
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="generators.cpp" />
+    <ClCompile Include="loaders.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matlabFunctions.cpp" />
+    <ClCompile Include="savers.cpp" />
     <ClCompile Include="Transmission.cpp" />
     <ClCompile Include="utilityFunctions.cpp" />
     <ClCompile Include="Vehicle.cpp" />

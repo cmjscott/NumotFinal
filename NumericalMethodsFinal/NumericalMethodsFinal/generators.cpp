@@ -186,10 +186,7 @@ Transmission generateTransmission()
 		}
 		else
 		{
-			//This doesn't quite work. It should make sure that the user enters in a smaller gear ratio than the one before it.
-			//do
-				valueHold = util::getSanitizedInput<double>(0, gearRatios[i - 1]);
-			//while (valueHold > gearRatios[i - 1]);
+			valueHold = util::getSanitizedInput<double>(0, gearRatios[i - 1]);
 		}
 
 		gearRatios[i] = valueHold;

@@ -4,15 +4,15 @@
 
 engine::engine(){}
 
-engine::engine(std::vector<double> _rpm, std::vector<double> _torque, double _efficiencyFactor)
+engine::engine(std::vector<double> _rpm, std::vector<double> _torque, std::string _name, double _efficiencyFactor)
 {
 	rpm = _rpm;
 	torque = _torque;
+	name = _name;
 	efficiencyFactor = _efficiencyFactor;
 	maxRpm = rpm.back();
 	peakTorqueRpm = findPeakTorqueRpm();
 }
-
 
 engine::~engine() {}
 
