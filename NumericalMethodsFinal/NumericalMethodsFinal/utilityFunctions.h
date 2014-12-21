@@ -58,6 +58,7 @@ namespace util
 		std::string filePath = getenv("USERPROFILE");
 		filePath += "\\Documents\\" + _fileName + ".csv";
 
+
 		// open file in write mode, overwriting if file exists.
 		//Note: this could lead to loss of data and should be dealt with.
 		outfile.open(filePath.c_str(), std::ios::out | std::ios::trunc);
@@ -90,7 +91,10 @@ namespace util
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');			// clear out any additional input from the stream until the end of the line
 
 			if (std::cin.gcount() > 1)								// if the ignore cleared out more than one character, assume that bad data was passed to the input stream
-				std::cout << "Error: invalid data entered." << std::endl << "Re-enter value as (" << typeid(T).name() << "): ";
+			{
+				std::cout << "Error: invalid data entered." << std::endl;
+				std::cout << "Re-enter value as (" << typeid(T).name() << "): ";
+			}
 			else
 				failedInput = false;
 
@@ -117,21 +121,26 @@ namespace util
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');	
 
 			if (std::cin.gcount() > 1)
-				std::cout << "Error: invalid data entered." << std::endl << "Re-enter value as (" << typeid(T).name() << "): ";
+			{
+				std::cout << "Error: invalid data entered." << std::endl;
+				std::cout << "Re-enter value as (" << typeid(T).name() << ")";
+				std::cout << " between ( " << lBound << " , " << uBound << " ): ";
+			}
 			else
 			{
 				if (terminalInput <= uBound && terminalInput >= lBound)
 					failedInput = false;
 				else
-					std::cout << "Error: data entered outside of given bounds." << std::endl << "Re-enter a value between ( " << lBound << " , " << uBound << " ): ";
+				{
+					std::cout << "Error: data entered outside of given bounds." << std::endl;
+					std::cout << "Re-enter a value between ( " << lBound << " , " << uBound << " ): ";
+				}
 			}
 		} while (failedInput);
 
 		return terminalInput;
 	}
 
-
-
-}
+} // namespace util
 
 #endif

@@ -12,6 +12,7 @@
 
 
 Vehicle generateVehicle(int simulationFlag);
+Transmission generateTransmission();
 
 
 

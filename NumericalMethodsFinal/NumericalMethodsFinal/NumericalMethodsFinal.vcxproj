@@ -162,7 +162,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='SchoolComputer|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="engine.h" />
-    <ClInclude Include="generateVehicle.h" />
+    <ClInclude Include="generators.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="matlabFunctions.h" />
     <ClInclude Include="Structs.h" />
@@ -202,7 +202,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='SchoolComputer|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="engine.cpp" />
-    <ClCompile Include="generateVehicle.cpp" />
+    <ClCompile Include="generators.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matlabFunctions.cpp" />
     <ClCompile Include="Transmission.cpp" />

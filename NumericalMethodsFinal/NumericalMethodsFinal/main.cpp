@@ -170,7 +170,7 @@ void functionalityDemonstration()
 	//create test objects
 	Vehicle testVehicle(mass, Cdrag, frontArea, diffRatio, wheelRadius, rho);
 	engine testEngine = engine(revMap, torqueMap);
-	Transmission testTransmission = Transmission(gearRatios);
+	Transmission testTransmission = generateTransmission();
 
 	testVehicle.attachEngine(&testEngine);
 	testVehicle.attachTransmission(&testTransmission);

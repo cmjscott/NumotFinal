@@ -45,9 +45,6 @@
     <ClInclude Include="main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="generateVehicle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="matlabFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -58,6 +55,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Transmission.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="generators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,13 +89,13 @@
     <ClCompile Include="..\..\..\Numot\Homework_3\Homework_3\mainn.cpp">
       <Filter>excluded</Filter>
     </ClCompile>
-    <ClCompile Include="generateVehicle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Transmission.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="generators.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

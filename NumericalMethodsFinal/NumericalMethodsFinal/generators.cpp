@@ -1,4 +1,4 @@
-#include "generateVehicle.h"
+#include "generators.h"
 
 
 
@@ -162,6 +162,47 @@ Vehicle generateVehicle(int simulationFlag)
 	return Vehicle(mass, Cdrag, frontArea, diffRatio, wheelRadius);
 }
 
+Transmission generateTransmission()
+{
+	int loopCount(0);
+	double valueHold(0);
+	bool hasEtas;
+	std::vector<double> gearRatios, gearEtas;
 
+	std::cout << "Enter number of gears: ";
+	loopCount = util::getSanitizedInput<int>(1,900);
+	gearRatios.resize(loopCount);
+	gearEtas.assign(loopCount, 1);
+
+	hasEtas = util::yesNo("Does this gearbox have efficiencies?");
+
+	//Prompts user to enter values for the transmission
+	for (int i = 0; i < loopCount; ++i)
+	{
+		std::cout << "Enter gear ratio for gear " << (i + 1) << ": ";
+		if (i == 0)
+		{
+			valueHold = util::getSanitizedInput<double>();
+		}
+		else
+		{
+			//This doesn't quite work. It should make sure that the user enters in a smaller gear ratio than the one before it.
+			//do
+				valueHold = util::getSanitizedInput<double>(0, gearRatios[i - 1]);
+			//while (valueHold > gearRatios[i - 1]);
+		}
+
+		gearRatios[i] = valueHold;
+
+		if (hasEtas)
+		{
+			std::cout << "Enter efficiency for gear " << (i + 1) << ": ";
+			valueHold = util::getSanitizedInput<double>(0,1);
+			gearEtas[i] = valueHold;
+		}
+	}
+
+	return Transmission(gearRatios, gearEtas);
+}
 
 

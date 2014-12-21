@@ -12,7 +12,7 @@
 
 #include "utilityFunctions.h"
 //#include "matlabFunctions.h"
-#include "generateVehicle.h"
+#include "generators.h"
 #include "prettyprint.h"
 #include "Vehicle.h"
 
