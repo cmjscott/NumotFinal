@@ -42,3 +42,21 @@ double engine::getTorque(double currentRpm)
 	currTorque = torque[i - 1] + (currentRpm - rpm[i - 1]) * (torque[i] - torque[i - 1]) / (rpm[i] - rpm[i - 1]);
 	return currTorque;
 }
+
+std::ostream& operator << (std::ostream& out, const engine& obj)
+{
+	out << "Engine" << std::endl;
+	out << "Rpm:";
+	for (auto i : obj.rpm)
+		out << i << ",";
+	out << std::endl;
+
+	out << "Torque:";
+	for (auto i : obj.torque)
+		out << i << ",";
+	out << std::endl;
+
+	out << "Efficiency factor:" << obj.efficiencyFactor << std::endl;
+
+	return out;
+}

@@ -51,6 +51,28 @@ namespace util
 	}
 
 
+	template<typename T>
+	void saveComponent(T const& obj, std::string _fileName)
+	{
+		std::ofstream outfile;
+		std::string filePath = getenv("USERPROFILE");
+		filePath += "\\Documents\\" + _fileName + ".csv";
+
+		// open file in write mode, overwriting if file exists.
+		//Note: this could lead to loss of data and should be dealt with.
+		outfile.open(filePath.c_str(), std::ios::out | std::ios::trunc);
+
+		if (outfile.is_open())
+		{
+			std::cout << "Writing to file:" << std::endl;
+			outfile << obj << std::endl;
+			outfile.close();
+		}//if (outfile.is_open())
+
+		std::cout << "Sucsess writing data to:" << std::endl << filePath << std::endl << std::endl;
+	}
+
+
 	//gets input from cin and will loop until the input is of the specified type, rejecting invalid inputs.
 	template <typename T>
 	T getSanitizedInput()
@@ -107,6 +129,8 @@ namespace util
 
 		return terminalInput;
 	}
+
+
 
 }
 

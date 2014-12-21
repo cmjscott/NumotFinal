@@ -175,12 +175,14 @@ void functionalityDemonstration()
 	testVehicle.attachEngine(&testEngine);
 	testVehicle.attachTransmission(&testTransmission);
 
+	util::saveComponent(testTransmission, "test_transmission_save");
+	util::saveComponent(testEngine, "test_engine_save");
+
 	//Run simulations
 	test4Data = simulation4(testVehicle, dt);
 	
 	//Output data for matlab
 	util::outputData(test4Data, "test_data");
-
 }
 
 //Depreciated

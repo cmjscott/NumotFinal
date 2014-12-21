@@ -4,6 +4,7 @@
 #define _INC_ENGINE
 
 #include <vector>
+#include <iostream>
 
 class engine
 {
@@ -15,6 +16,7 @@ public:
 
 	//public member functions
 	double getTorque(double currentRpm);
+	friend std::ostream& operator<< (std::ostream& out, const engine& obj);
 
 	//public member variables
 	double maxRpm;
