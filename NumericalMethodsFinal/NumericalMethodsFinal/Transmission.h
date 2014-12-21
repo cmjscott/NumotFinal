@@ -24,6 +24,7 @@ public:
 	double getPreviousRatio();
 	bool maxGear;
 	bool minGear;
+	friend std::ostream& operator<< (std::ostream& out, const Transmission& obj);
 
 	//public member variables
 
@@ -40,6 +41,7 @@ private:
 	std::vector<double> gearEtas;
 	std::vector<int> shiftLog;
 	std::vector<double> rpmLog;
+
 };
 
 #endif
