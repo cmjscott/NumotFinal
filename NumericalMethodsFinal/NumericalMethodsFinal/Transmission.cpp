@@ -75,6 +75,7 @@ double Transmission::getPreviousRatio()
 std::ostream& operator << (std::ostream& out, const Transmission& obj)
 {
 	out << "Transmission" << std::endl;
+	out << "Number of Gears:" << obj.gearRatios.size() << std::endl;
 	out << "Gear Ratios:";
 	for (auto i : obj.gearRatios)
 		out << i << ",";
@@ -83,7 +84,6 @@ std::ostream& operator << (std::ostream& out, const Transmission& obj)
 	out << "Gear Etas:";
 	for (auto i : obj.gearEtas)
 		out << i << ",";
-	out << std::endl;
 
 	return out;
 }

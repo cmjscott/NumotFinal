@@ -15,6 +15,9 @@
 #include "generators.h"
 #include "prettyprint.h"
 #include "Vehicle.h"
+#include "savers.h"
+#include "loaders.h"
+#include "Structs.h"
 
 std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt);
 std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt);

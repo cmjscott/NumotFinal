@@ -26,7 +26,7 @@ namespace savers
 		if (outfile.is_open())
 		{
 			std::cout << "Writing to file:" << std::endl;
-			outfile << obj << std::endl;
+			outfile << obj;
 			outfile.close();
 		}//if (outfile.is_open())
 

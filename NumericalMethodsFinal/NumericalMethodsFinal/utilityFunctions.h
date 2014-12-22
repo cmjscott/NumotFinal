@@ -8,7 +8,9 @@
 #include <fstream>
 #include <iostream>
 #include <climits>
-#include <Windows.h>
+
+// for some reason including this fucks up some stuff.
+//#include <Windows.h>
 
 
 
@@ -119,6 +121,31 @@ namespace util
 		return terminalInput;
 	}
 
+
+	//make another getSanitizedInput function that takes two parameter types, one being the type of data you want back and the other being the stream object
+	template <typename T>
+	T getSanitizedInput(std::ifstream& in)
+	{
+		T extractedValue;
+		bool failedInput = true;
+
+		do
+		{
+			in >> extractedValue;
+
+			if (in.fail())
+			{
+				in.clear();
+				failedInput = false;
+			}
+				
+
+				
+
+		} while (failedInput);
+
+		return terminalInput;
+	}
 } // namespace util
 
 #endif

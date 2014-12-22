@@ -46,6 +46,7 @@ double engine::getTorque(double currentRpm)
 std::ostream& operator << (std::ostream& out, const engine& obj)
 {
 	out << "Engine" << std::endl;
+	out << obj.name << std::endl;
 	out << "Rpm:";
 	for (auto i : obj.rpm)
 		out << i << ",";

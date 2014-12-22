@@ -170,24 +170,31 @@ void functionalityDemonstration()
 	//create test objects
 	Vehicle testVehicle(mass, Cdrag, frontArea, diffRatio, wheelRadius, rho);
 	engine testEngine = engine(revMap, torqueMap, "test_engine");
-	Transmission testTransmission = generateTransmission();
+	//Transmission testTransmission = generateTransmission();
 
 	testVehicle.attachEngine(&testEngine);
-	testVehicle.attachTransmission(&testTransmission);
+	//testVehicle.attachTransmission(&testTransmission);
 
-	util::saveComponent(testTransmission, "test_transmission_save");
-	util::saveComponent(testEngine, "test_engine_save");
+	//savers::saveComponent(testTransmission, "test_transmission_save");
+	savers::saveComponent(testEngine, "test_engine_save");
+
+	//loaders::loadTransmission("test_transmission_save");
 
 	//Run simulations
-	test4Data = simulation4(testVehicle, dt);
+	//test4Data = simulation4(testVehicle, dt);
 	
 	//Output data for matlab
-	util::outputData(test4Data, "test_data");
+	//util::outputData(test4Data, "test_data");
+	_getch();
 }
 
+#define REGISTER_CLASS(n) g_factory.register_class<n>(#n)
 void init()
 {
 	// make sure all directories are created and ready here
+
+
+
 
 }
 
