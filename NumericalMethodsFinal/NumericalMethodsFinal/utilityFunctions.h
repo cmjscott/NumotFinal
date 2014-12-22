@@ -124,7 +124,7 @@ namespace util
 
 	//make another getSanitizedInput function that takes two parameter types, one being the type of data you want back and the other being the stream object
 	template <typename T>
-	T getSanitizedInput(std::ifstream& in)
+	T getSanitizedInput(T in)
 	{
 		T extractedValue;
 		bool failedInput = true;

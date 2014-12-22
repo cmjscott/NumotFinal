@@ -18,7 +18,7 @@ int main()
 	Vehicle simulationVehicle;
 
 	//gearRatios.assign(ratioValues, ratioValues + sizeof(ratioValues) / sizeof(double));
-
+	init();
 
 	//prompts user to chose a simulation and then prompts them for each required input.
 	do
@@ -171,30 +171,28 @@ void functionalityDemonstration()
 	Vehicle testVehicle(mass, Cdrag, frontArea, diffRatio, wheelRadius, rho);
 	engine testEngine = engine(revMap, torqueMap, "test_engine");
 	//Transmission testTransmission = generateTransmission();
+	
+	Transmission testTransmission = loaders::loadTransmission("test_transmission_save");
 
 	testVehicle.attachEngine(&testEngine);
-	//testVehicle.attachTransmission(&testTransmission);
+	testVehicle.attachTransmission(&testTransmission);
 
 	//savers::saveComponent(testTransmission, "test_transmission_save");
-	savers::saveComponent(testEngine, "test_engine_save");
+	//savers::saveComponent(testEngine, "test_engine_save");
 
-	//loaders::loadTransmission("test_transmission_save");
+	
 
 	//Run simulations
-	//test4Data = simulation4(testVehicle, dt);
+	test4Data = simulation4(testVehicle, dt);
 	
 	//Output data for matlab
 	//util::outputData(test4Data, "test_data");
-	_getch();
 }
 
-#define REGISTER_CLASS(n) g_factory.register_class<n>(#n)
+#define REGISTER_COMPONENT(n) components.registerComponent(#n)
 void init()
 {
 	// make sure all directories are created and ready here
-
-
-
 
 }
 

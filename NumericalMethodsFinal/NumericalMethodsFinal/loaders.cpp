@@ -14,34 +14,62 @@ namespace loaders
 
 		inFile.open(filePath.c_str(), std::ios::in);
 
+		//TODO: add error checking if the file is open, maybe throw some sort of error?
+		inFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
 		while (!inFile.eof())
 		{
 			std::getline(inFile, valueHold);
 			data.push_back(valueHold);
 			valueHold.clear();
 		}
+
 		return data;
 	}
 
-
-
-
-
-
-	Transmission loadTransmission(std::vector<std::string> data)
+	Transmission loadTransmission(std::string _fileName)
 	{
+		std::vector<std::string> data;
 		Transmission loadedTransmission;
-		
 		std::string valueHold;
 		std::stringstream dataStream;
+		std::vector<double> gearRatios, gearEtas;
 		
-		for (auto i : data)
-		{
+		data = loadFile(_fileName);
 
-
-		}
+		gearRatios = extractDoubles(data[0]);
+		gearEtas = extractDoubles(data[1]);
+		loadedTransmission = Transmission(gearRatios, gearEtas);
 
 		return loadedTransmission;
 	}
 
+	std::vector<double> extractDoubles(std::string line)
+	{
+
+		double valueHold;
+		std::stringstream dataStream;
+		std::vector<double> extractedData;
+
+		dataStream.str(line);
+		dataStream.ignore(255,':');
+
+		while (!dataStream.eof())
+		{
+			dataStream >> valueHold;
+
+			if (dataStream.fail())
+			{
+				dataStream.ignore();
+				dataStream.clear();
+			}
+			else
+				dataStream.ignore();
+
+			extractedData.push_back(valueHold);
+			if (dataStream.rdbuf()->in_avail() == 0)
+				dataStream.setstate(std::ios::eofbit);
+		}
+		return extractedData;
+	}
 }

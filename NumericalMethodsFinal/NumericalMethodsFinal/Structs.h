@@ -17,7 +17,7 @@ typedef enum {
 	COMPONENT_VEHICLE,
 }componentType_e;
 
-
+//NOT USED
 //I DO NOT UNDERSTAND HOW THIS WORKS. FUCKING MAGIC, YO
 template <class T> 
 void* constructor() { return (void*)new T(); }
@@ -43,5 +43,18 @@ struct factory
 };
 
 extern factory componentFactory;
+
+//NOT USED
+struct vehicleCompponentsMap
+{
+	std::map<std::string, int> registeredComponents;
+
+	void registerComponent(std::string const& n)
+	{
+		registeredComponents.insert(std::pair<std::string, int>(n,registeredComponents.size()+1));
+	}
+};
+
+extern vehicleCompponentsMap components;
 
 #endif
