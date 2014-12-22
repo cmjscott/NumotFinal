@@ -3,9 +3,10 @@
 
 Transmission::Transmission(){}
 
-Transmission::Transmission(std::vector<double> _gearRatios)
+Transmission::Transmission(std::vector<double> _gearRatios, std::string _name)
 {
 	gearRatios = _gearRatios;
+	name = _name;
 	gearEtas.assign(gearRatios.size(),1);
 	gearRatios.shrink_to_fit();
 
@@ -16,10 +17,11 @@ Transmission::Transmission(std::vector<double> _gearRatios)
 	maxGear = false;
 }
 
-Transmission::Transmission(std::vector<double> _gearRatios, std::vector<double> _gearEtas)
+Transmission::Transmission(std::vector<double> _gearRatios, std::vector<double> _gearEtas, std::string _name)
 {
 	gearRatios = _gearRatios;
 	gearEtas = _gearEtas;
+	name = _name;
 	gearRatios.shrink_to_fit();
 
 	shiftTime = 0;
@@ -75,6 +77,7 @@ double Transmission::getPreviousRatio()
 std::ostream& operator << (std::ostream& out, const Transmission& obj)
 {
 	out << "Transmission" << std::endl;
+	out << obj.name << std::endl;
 	out << "Gear Ratios:";
 	for (auto i : obj.gearRatios)
 		out << i << ",";

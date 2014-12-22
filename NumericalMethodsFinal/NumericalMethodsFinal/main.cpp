@@ -194,6 +194,15 @@ void init()
 {
 	// make sure all directories are created and ready here
 
+	if (CreateDirectory(OutputFolder.c_str(), NULL) ||
+		ERROR_ALREADY_EXISTS == GetLastError())
+	{
+		// CopyFile(...)
+	}
+	else
+	{
+		// Failed to create directory.
+	}
 }
 
 

@@ -167,6 +167,7 @@ Transmission generateTransmission()
 	int loopCount(0);
 	double valueHold(0);
 	bool hasEtas;
+	std::string transName;
 	std::vector<double> gearRatios, gearEtas;
 
 	std::cout << "Enter number of gears: ";
@@ -175,6 +176,9 @@ Transmission generateTransmission()
 	gearEtas.assign(loopCount, 1);
 
 	hasEtas = util::yesNo("Does this gearbox have efficiencies?");
+
+	std::cout << "Enter gearbox name: ";
+	transName = util::getSanitizedInput<std::string>();
 
 	//Prompts user to enter values for the transmission
 	for (int i = 0; i < loopCount; ++i)
@@ -199,7 +203,7 @@ Transmission generateTransmission()
 		}
 	}
 
-	return Transmission(gearRatios, gearEtas);
+	return Transmission(gearRatios, gearEtas, transName);
 }
 
 

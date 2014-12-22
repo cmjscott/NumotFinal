@@ -37,9 +37,9 @@ namespace loaders
 		
 		data = loadFile(_fileName);
 
-		gearRatios = extractDoubles(data[0]);
-		gearEtas = extractDoubles(data[1]);
-		loadedTransmission = Transmission(gearRatios, gearEtas);
+		gearRatios = extractDoubles(data[1]);
+		gearEtas = extractDoubles(data[2]);
+		loadedTransmission = Transmission(gearRatios, gearEtas, data[0]);
 
 		return loadedTransmission;
 	}

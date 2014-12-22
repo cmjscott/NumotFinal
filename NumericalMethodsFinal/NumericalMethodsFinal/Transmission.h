@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <iostream>
+#include <string>
 
 class Transmission
 {
@@ -12,8 +13,8 @@ public:
 
 	// constructors
 	Transmission();
-	Transmission(std::vector<double> _gearRatios);
-	Transmission(std::vector<double> _gearRatios, std::vector<double> _gearEtas);
+	Transmission(std::vector<double> _gearRatios, std::string _name);
+	Transmission(std::vector<double> _gearRatios, std::vector<double> _gearEtas, std::string _name);
 	~Transmission();
 
 	//public member functions
@@ -27,6 +28,7 @@ public:
 	friend std::ostream& operator<< (std::ostream& out, const Transmission& obj);
 
 	//public member variables
+	std::string name;
 
 private:
 
