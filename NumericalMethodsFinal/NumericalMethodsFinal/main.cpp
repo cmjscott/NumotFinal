@@ -7,6 +7,7 @@
 
 
 const double MS_TO_MPH(2.2368);
+componentSave components;
 
 int main()
 {
@@ -177,8 +178,8 @@ void functionalityDemonstration()
 	testVehicle.attachEngine(&testEngine);
 	testVehicle.attachTransmission(&testTransmission);
 
-	//savers::saveComponent(testTransmission, "test_transmission_save");
-	//savers::saveComponent(testEngine, "test_engine_save");
+	savers::saveComponent(testTransmission, "test_transmission_save", COMPONENT_TRANSMISSION);
+	savers::saveComponent(testEngine, "test_engine_save", COMPONENT_ENGINE);
 
 	
 
@@ -189,20 +190,33 @@ void functionalityDemonstration()
 	//util::outputData(test4Data, "test_data");
 }
 
-#define REGISTER_COMPONENT(n) components.registerComponent(#n)
+
 void init()
 {
 	// make sure all directories are created and ready here
+	std::string outputFolder;
 
-	if (CreateDirectory(OutputFolder.c_str(), NULL) ||
-		ERROR_ALREADY_EXISTS == GetLastError())
+	components.registerComponent(COMPONENT_ENGINE, "../Engines");
+	components.registerComponent(COMPONENT_TRANSMISSION, "../Transmissions");
+	components.registerComponent(COMPONENT_VEHICLE, "../Vehicles");
+	components.registerComponent(COMPONENT_RESULTS, "../Results");
+	
+	for (auto i : components.registeredComponents)
 	{
-		// CopyFile(...)
+		outputFolder = i.second;
+		if (CreateDirectory(outputFolder.c_str(), NULL) ||
+			ERROR_ALREADY_EXISTS == GetLastError())
+		{
+			std::cout << "Folder created or exists" << std::endl;
+		}
+		else
+		{
+			std::cout << "Folder not created" << std::endl;
+		}
 	}
-	else
-	{
-		// Failed to create directory.
-	}
+
+	//std::string(OutputFolder + CopiedFile).c_str();
+	
 }
 
 

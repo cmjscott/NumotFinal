@@ -15,7 +15,19 @@ typedef enum {
 	COMPONENT_TRANSMISSION,
 	COMPONENT_ENGINE,
 	COMPONENT_VEHICLE,
+	COMPONENT_RESULTS,
 }componentType_e;
+
+struct componentSave
+{
+	std::map<componentType_e, std::string> registeredComponents;
+
+	void registerComponent(componentType_e _component, std::string path)
+	{
+		registeredComponents.insert(std::pair<componentType_e, std::string>(_component, path)); 
+	}
+};
+
 
 //NOT USED
 //I DO NOT UNDERSTAND HOW THIS WORKS. FUCKING MAGIC, YO
@@ -45,16 +57,6 @@ struct factory
 extern factory componentFactory;
 
 //NOT USED
-struct vehicleCompponentsMap
-{
-	std::map<std::string, int> registeredComponents;
 
-	void registerComponent(std::string const& n)
-	{
-		registeredComponents.insert(std::pair<std::string, int>(n,registeredComponents.size()+1));
-	}
-};
-
-extern vehicleCompponentsMap components;
 
 #endif

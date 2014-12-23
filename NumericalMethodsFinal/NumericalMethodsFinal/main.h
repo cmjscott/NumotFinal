@@ -9,7 +9,7 @@
 #include <vector> 
 #include <fstream> //for file I/O
 #include <string>
-
+#include <Windows.h>
 #include "utilityFunctions.h"
 //#include "matlabFunctions.h"
 #include "generators.h"
@@ -18,6 +18,8 @@
 #include "savers.h"
 #include "loaders.h"
 #include "Structs.h"
+
+extern componentSave components;
 
 std::vector<std::vector<double> > simulation1(Vehicle testVehicle, double _dt);
 std::vector<std::vector<double> > simulation3(Vehicle testVehicle, double _dt);

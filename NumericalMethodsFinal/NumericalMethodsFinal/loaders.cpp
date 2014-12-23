@@ -3,14 +3,13 @@
 
 namespace loaders
 {
-	std::vector<std::string> loadFile(std::string _fileName)
+	std::vector<std::string> loadFile(std::string _fileName, componentType_e _componentType)
 	{
 		std::vector<std::string> data;
 		std::ifstream inFile;
 		std::string valueHold;
 
-		std::string filePath = getenv("USERPROFILE");
-		filePath += "\\Documents\\" + _fileName + ".txt";
+		std::string filePath = components.registeredComponents[_componentType] + "/" + _fileName + ".txt";
 
 		inFile.open(filePath.c_str(), std::ios::in);
 
@@ -35,7 +34,7 @@ namespace loaders
 		std::stringstream dataStream;
 		std::vector<double> gearRatios, gearEtas;
 		
-		data = loadFile(_fileName);
+		data = loadFile(_fileName, COMPONENT_TRANSMISSION);
 
 		gearRatios = extractDoubles(data[1]);
 		gearEtas = extractDoubles(data[2]);

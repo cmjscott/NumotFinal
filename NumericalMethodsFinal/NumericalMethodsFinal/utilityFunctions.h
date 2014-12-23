@@ -68,7 +68,7 @@ namespace util
 			if (std::cin.fail())
 				std::cin.clear();
 
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');			// clear out any additional input from the stream until the end of the line
+			std::cin.ignore(255, '\n');			// clear out any additional input from the stream until the end of the line
 
 			if (std::cin.gcount() > 1)								// if the ignore cleared out more than one character, assume that bad data was passed to the input stream
 			{

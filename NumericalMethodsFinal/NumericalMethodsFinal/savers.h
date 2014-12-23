@@ -8,15 +8,19 @@
 #include <fstream>
 #include <Windows.h>
 #include <vector>
+#include "Structs.h"
+
+extern componentSave components;
 
 namespace savers
 {
 	template<typename T>
-	void saveComponent(T const& obj, std::string _fileName)
+	void saveComponent(T const& obj, std::string _fileName, componentType_e _componentType )
 	{
 		
-		std::string filePath = getenv("USERPROFILE");
-		filePath += "\\Documents\\" + _fileName + ".txt";
+		//std::string filePath = getenv("USERPROFILE");
+		//filePath += "\\Documents\\" + _fileName + ".txt";
+		std::string filePath = components.registeredComponents[_componentType] +"/" + _fileName + ".txt";
 		std::ofstream outfile;
 
 		// open file in write mode, overwriting if file exists.
